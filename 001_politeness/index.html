@@ -15,6 +15,15 @@
         <link rel="stylesheet" href="../static/foundation-icons/foundation-icons.css" />
 		<link rel="stylesheet" href="../static/revealjs/css/reveal.css">
 		<link rel="stylesheet" href="../static/revealjs/css/theme/black.css" id="theme">
+
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../static/revealjs/css/print/pdf.css' : '../static/revealjs/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
 	</head>
 
 	<body>
