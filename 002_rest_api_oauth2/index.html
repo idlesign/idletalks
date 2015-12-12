@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+		<title>Основы REST API и OAuth2</title>
+
+		<meta name="description" content="Об основах REST-архитектуры и OAuth2 - каркаса для авторизации.">
+		<meta name="author" content="Игорь `idle sign` Стариков">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="../static/foundation-icons/foundation-icons.css" />
+		<link rel="stylesheet" href="../static/revealjs/css/reveal.css">
+		<link rel="stylesheet" href="../static/revealjs/css/theme/black.css" id="theme">
+
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../static/revealjs/css/print/pdf.css' : '../static/revealjs/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+        <style type="text/css">
+            td.va__t {
+                vertical-align: top;
+            }
+            .small li, .small p {
+                font-size: 0.6em;
+            }
+            li.marg__b {
+                margin-bottom: 1em;
+            }
+
+        </style>
+
+	</head>
+
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+                <!--
+
+                    В ходе этого выступления мы создадим веб-приложение на Django, при помощи которого продемонстрируем всем желающим,
+                    как может быть реализован согласованный с принципами REST программный интерфейс к нему, а также узнаем для чего нужны подобные интерфейсы.
+                    Помимо принципов REST, будет затронута тема ограничения доступа к веб-ресурсам при помощи OAuth2
+                    (с примерами использования приложения django-oauthost).
+
+                    Ожидаемый уровень подготовки: начальный-средний.
+
+                -->
+
+                <section>
+                    <section>
+                        <h6>Основы REST API и OAuth2</h6>
+                        <p><small>
+                            Игорь Стариков / idle sign
+                        </small></p>
+
+                    </section>
+
+                    <section>
+                        <h2>Автор</h2>
+                        <ul>
+                            <li>Несу Python в массы:
+                                <ul>
+                                    <li>Рассказываю о нём</li>
+                                    <li>Поддерживаю сайт — <a href="http://pythonz.net">pythonz.net</a></li>
+                                    <li>Перевожу и озвучиваю доклады с PyCon US</li>
+                                </ul>
+                            </li>
+                            <li>
+                                Пишу код и отдаю его людям —
+                                <a href="https://github.com/idlesign"><i class="fi-social-github"></i> idlesign</a>
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <section>
+                        <h2>Архитектурный стиль REST</h2>
+
+                        <blockquote><small>
+                            Representational State Transfer — передача репрезентативного состояния.
+                        </small></blockquote>
+
+                        <p>
+                            Передаётся представление ресурса в некотором состоянии.
+                        <p>
+
+                    </section>
+
+                    <section>
+                        <h3>Рой Томас Филдинг</h3>
+
+                        <p>У истоков HTTP, HTML, URI.</p>
+
+                        <p>Диссертация <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">
+                        Architectural Styles and the Design of Network-based Software Architectures</a>, 2000&nbsp;г.</p>
+
+                        <p>Описаны принципы, лежащие в основе всемирной паутины.
+                            REST — главы
+                            <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm">5</a>,
+                            <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/evaluation.htm">6</a>.
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2>REST — свод требований</h2>
+                        <ul>
+                            <li><strong>Единообразный интерфейс</strong></li>
+                            <li>Клиент-сервер</li>
+                            <li>Нет хранению состояния на сервере</li>
+                            <li>Слоистая система</li>
+                            <li>Кешируемость (возможна)</li>
+                            <li>Код по требованию (возможен)</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>Клиент-сервер</h3>
+
+                        <p>Разделение ответственности.</p>
+                        <small>Пример: пользовательский интерфейс — хранилице данных.</small>
+                    </section>
+
+                    <section>
+                        <h3>Нет хранению состояния на сервере</h3>
+
+                        <p>
+                            Каждый запрос целостен не зависит от предыдущих, содержит всю необходимую
+                            для ответа на него информацию.
+                        </p>
+                        <ul class="small">
+                            <li>Состояние сессии не хранится на сервере, но может хранится на клиенте.</li>
+                            <li>Одинаковые запросы с разных клиентов должны приводить к одинаковым представлениям.</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>Слоистая система</h3>
+
+                        <p>
+                            Возможна иерархия слоев, в которой область видимости каждого компонента ограничена его слоем.<br>
+                            Каждый слой может содержать несколько компонентов (сервер приложений, браузер, прокси, шлюз и т.п.).
+                        </p>
+                    </section>
+
+                    <section>
+                        <h3>Кешируемость</h3>
+                        <div class="small">
+                            Средство повышения производительности.
+
+                            <p>
+                                По умолчанию ответ на запрос получения данных может кешироваться, ответы на другие типы
+                                запросов не кешируются.
+                            </p>
+                            <p>Ответ сервера должен содержать явное указание, разрешено ли кеширование.</p>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h3>Код по требованию</h3>
+                        <p>Скрипты могут загружаться на клиенты,<br> исполняться ими.</p>
+                    </section>
+
+                    <section>
+                        <h3>Ресурсы</h3>
+
+                        <ul class="small">
+                            <li>Ресурсом может быть всё, что можно именовать.</li>
+                            <li>Имена выбирает хозяин ресурса. Цельнтрализация считается злом.</li>
+                            <li>Формат (тип медиа) зависит от нужд и возможностей клиента.<br>Не все для автообработки.</li>
+                            <li>Степень идентичности представления исходному объекту скрыта за интерфейсом.</li>
+                            <li>Одновременно два разных русурса могут иметь одно значение (представление).</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>Единообразный интерфейс</h3>
+                        <small>для взаимодействия компонентов системы</small>
+                        <div>
+                            Требования к ресурсам:
+                            <ul>
+                                <li>Идентификация<br>
+                                    <small>URI должны быть постоянными.</small>
+                                </li>
+                                <li>Манипуляция через представления<br>
+                                    <small>Действия HTTP: OPTIONS, GET, PUT, POST, DELETE, PATCH.</small>
+                                </li>
+                                <li>Cамоописание<br>
+                                    <small>Заголовки HTTP: host, status, accept-encoding, content-type, cache-control.</small>
+                                </li>
+                                <li>ГКДСП (HATEOAS)<br>
+                                    <small>Гипермедиа, как двигатель состояния приложения.
+                                    Гиперссылки — основа паутины.</small>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h3>Плюсы и минусы REST</h3>
+
+                        <table>
+                            <tr>
+                                <td width="50%">
+                                    <ol class="small">
+                                        <li>Простота архитектуры</li>
+                                        <li>Понижение сложности системы</li>
+                                        <li>Удобство мониторинга</li>
+                                        <li>Увеличение надёжности</li>
+                                        <li>Расположенность к масштабируемости</li>
+                                    </ol>
+                                </td>
+                                <td class="va__t">
+                                    <ol class="small">
+                                        <li>Снижение производительности<br>
+                                            <small>*Нивелируется кешированием.</small>
+                                        </li>
+                                        <li>Снижение контроля со стороны сервера<br>
+                                            <small>Необходимость поддержки разных версий клиентов.</small>
+                                        </li>
+                                        <li>Снижение продуктивности<br>
+                                            <small>Оптимизирован для общих случаев.</small>
+                                        </li>
+                                    </ol>
+                                </td>
+                            </tr>
+                        </table>
+                    </section>
+
+                </section>
+
+               <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h2>Гипермедиа и JSON</h2>
+
+                    JSON — не является гипермедийным форматом
+
+                    <p>
+                    <ul class="small">
+                        <li><a href="https://tools.ietf.org/html/rfc5988">Web Linking (RFC 5988)</a></li>
+                        <li><a href="http://json-ld.org/">JSON-LD (Linked Data)</a></li>
+                        <li><a href="https://github.com/kevinswiber/siren">Siren</a></li>
+                        <li><a href="https://github.com/collection-json/spec">Collection+JSON</a></li>
+                        <li><a href="http://stateless.co/hal_specification.html">HAL — Hypertext Application Language</a></li>
+                    </ul>
+                    </p>
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h2>Пишем. Часть 1</h2>
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <section>
+                        <h3>OAuth2 — каркас для авторизации</h3>
+
+                        <small>Переосмысление оригинального OAuth.</small>
+
+                        <p>
+                            Спецификация: <a href="https://tools.ietf.org/html/rfc6749">
+                            The OAuth 2.0 Authorization Framework (RFC 6749)</a>. Разработка: 2010-2012.
+                        </p>
+
+                    </section>
+
+                    <section>
+                        <h3>Основные шаги</h3>
+
+                        <ol>
+                            <li>
+                                Регистрация клиента<br>
+                                <small>для получения его идентификатора (не являющегося секретным)</small>
+                                <ul class="small">
+                                    <li>Указание типа (доверенный / публичный)</li>
+                                    <li>Указание URI переадресации (для возвращения ответа с реквизитами)</li>
+                                    <li>Указание пароля (не обязательно)</li>
+                                </ul>
+                            </li>
+                            <li>
+                                Получение токена доступа<br>
+                                <small>Токен — временный идентификатор. Выдаётся для пользователя и/или клиента.</small>
+                            </li>
+                            <li>
+                                Использование токена доступа<br>
+                                <small>При каждом обращении к нужным ресурсам вместо связки логин + пароль пользователя.</small>
+                            </li>
+                        </ol>
+                    </section>
+
+                    <section>
+                        <h3>Точки сообщения</h3>
+
+                        <ul>
+                            <li>
+                                Точка авторизации (TLS). На сервере<br>
+                                <small>
+                                    Для получения допуска от владельца ресурса.
+                                </small>
+
+                            </li>
+
+                            <li>
+                                Точка получения токена (TLS). На сервере<br>
+                                <small>
+                                    Для обмена реквизитов допуска на токен доступа, обычно с аутентификацией клиента.
+                                </small>
+                            </li>
+
+                            <li>
+                                Точка переадресации. На получателе<br>
+                                <small>
+                                    Используется сервером для возвращения ответа, содержащего реквизиты доступа.
+                                </small>
+                            </li>
+
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h4>Варианты получения допуска</h4>
+
+                        <ul>
+                            <li>
+                                Код авторизации (доверенные, веб)<br>
+                                <small>
+                                    1. Точка авторизации: ID Клиента + URI <span class="fi-arrow-right"></span> Аутентификация <span class="fi-arrow-right"></span> Код на URI<br>
+                                    2. Точка токена: ID Клиента + URI + Код <span class="fi-arrow-right"></span> Токен на URI
+                                </small>
+                            </li>
+
+                            <li>
+                                Неявный (публичные, мобильные)<br>
+                                <small>
+                                    Точка авторизации: ID Клиента + URI <span class="fi-arrow-right"></span> Аутентификация <span class="fi-arrow-right"></span> Токен на URI
+                                </small>
+                            </li>
+
+                            <li>
+                                Реквизиты пользователя (наследство)<br>
+                                <small>
+                                    <i>(только в случае доверия к клиенту и недоступности других способов)</i><br>
+                                    Точка токена: Реквизиты пользователя <span class="fi-arrow-right"></span> Токен
+                                </small>
+                            </li>
+
+                            <li>
+                                Реквизиты клиента (только доверенные, серверные)<br>
+                                <small>
+                                    Точка токена: Реквизиты клиента <span class="fi-arrow-right"></span> Токен
+                                </small>
+                            </li>
+
+
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h4>Использование токена типа Предъявитель (Bearer)</h4>
+
+                        <p><small>
+                            <a href="https://tools.ietf.org/html/rfc6750">OAuth 2.0 Bearer Token Usage (RFC 6750)</a>
+                        </small></p>
+
+                        <ul>
+                            <li>
+                                Заголовок Authorization
+                                <pre><code>Authorization: Bearer dnU7qj7wgd</code></pre>
+                            </li>
+
+                            <li>
+                                POST
+                                <pre><code>access_token=dnU7qj7wgd</code></pre>
+                            </li>
+
+                            <li>
+                                GET, только если иначе нельзя
+                                <pre><code>?access_token=dnU7qj7wgd</code></pre>
+                            </li>
+                        </ul>
+                    </section>
+
+                </section>
+
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h2>Пишем. Часть 2</h2>
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h3>Ссылки</h3>
+
+                    <ul class="small">
+                        <li><a href="https://pypi.python.org/pypi/requests-oauthlib/">requests-oauthlib</a></li>
+                        <li class="marg__b"><a href="https://pypi.python.org/pypi/django-oauthost/">django-oauthost</a></li>
+
+                        <li><a href="http://habrahabr.ru/company/mailru/blog/115163/">OAuth 2.0 простым и понятным языком</a></li>
+                        <li><a href="https://tech.yandex.ru/oauth/doc/dg/concepts/about-docpage/">OAuth в Яндексе</a></li>
+                        <li><a href="http://restcookbook.com/">The RESTful CookBook</a> (англ.)</li>
+                        <li><a href="http://www.restapitutorial.com/">A RESTful Tutorial</a> (англ.)</li>
+                        <li><a href="http://sookocheff.com/post/api/on-choosing-a-hypermedia-format/">
+                            On choosing a hypermedia type for your API
+                        </a> (англ.)</li>
+                        <li><a href="http://apihandyman.io/do-you-really-know-why-you-prefer-rest-over-rpc/">
+                            Do you really know why you prefer REST over RPC?
+                        </a> (англ.)</li>
+
+                    </ul>
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <section>
+                        <h2>Спасибо за внимание!</h2>
+                    </section>
+
+                    <section>
+                        <h1>Вопросы?</h1>
+                        <p><small>
+                            <a href="https://github.com/idlesign"><i class="fi-social-github"></i> idlesign</a> &nbsp;
+                            <a href="https://www.linkedin.com/in/idlesign"><i class="fi-social-linkedin"></i> idlesign</a> &nbsp;
+                            <a href="https://twitter.com/idlesign"><i class="fi-social-twitter"></i> idlesign</a> &nbsp;
+                        </small></p>
+
+                        <p><small>
+                            Эти слайды можно найти тут — <a href="http://bit.ly/ist_002">http://bit.ly/ist_002</a>
+                            <br>
+                            <img src="static/qr-slides-rest.png">
+                        </small></p>
+
+                    </section>
+                </section>
+
+			</div>
+		</div>
+
+		<script src="../static/revealjs/lib/js/head.min.js"></script>
+		<script src="../static/revealjs/js/reveal.js"></script>
+		<script>
+			Reveal.initialize({
+				controls: true,
+				mouseWheel: true,
+
+				progress: true,
+				history: true,
+				center: true,
+				transition: 'slide',
+				dependencies: [
+					{
+                        src: '../static/revealjs/lib/js/classList.js',
+                        condition: function() { return !document.body.classList; }
+                    },
+					{
+                        src: '../static/revealjs/plugin/highlight/highlight.js',
+                        async: true,
+                        condition: function() { return !!document.querySelector( 'pre code' ); },
+                        callback: function() { hljs.initHighlightingOnLoad(); }
+                    },
+					{ src: '../static/revealjs/plugin/notes/notes.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
