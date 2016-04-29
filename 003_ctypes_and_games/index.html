@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+		<title>Ctypes в игровых приложениях на Python</title>
+
+		<meta name="description" content="О некоторых средствах для создания двухмерных игр на Python, и том как они используют ctypes.">
+		<meta name="author" content="Игорь `idle sign` Стариков">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="../static/foundation-icons/foundation-icons.css" />
+		<link rel="stylesheet" href="../static/revealjs/css/reveal.css">
+		<link rel="stylesheet" href="../static/revealjs/css/theme/black.css" id="theme">
+
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../static/revealjs/css/print/pdf.css' : '../static/revealjs/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+        <style type="text/css">
+            td.va__t {
+                vertical-align: top;
+            }
+            .small li, .small p {
+                font-size: 0.6em;
+            }
+            li.marg__b {
+                margin-bottom: 1em;
+            }
+
+        </style>
+
+	</head>
+
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+                <!--
+
+                    Не секрет, что Питон, благодаря своим свойствам, имеет широчайшую область применения.
+                    Не являются исключением и мультимедийные (в том числе игровые) приложения.
+                    В ходе этого выступления:
+                        1. вы узнаете о некоторых средствах и принципах их построения, а также о том,
+                        как упомянутые средства могут использовать функции внешних библиотек, написанных на других
+                        языках программирования;
+                        2. а я получу, наконец, достижение из одной известной игры, не запуская её.
+
+                    Ожидаемый уровень подготовки: начальный-средний.
+
+                -->
+
+                <section>
+                    <section>
+                        <h6>Ctypes в игровых приложениях на Python</h6>
+                        <p><small>
+                            Игорь Стариков / idle sign
+                        </small></p>
+
+                    </section>
+
+                    <section>
+                        <h2>Автор</h2>
+                        <ul>
+                            <li>Несу Python в массы:
+                                <ul>
+                                    <li>Рассказываю о нём</li>
+                                    <li>Поддерживаю сайт — <a href="http://pythonz.net">pythonz.net</a></li>
+                                    <li>Перевожу и озвучиваю доклады с PyCon US</li>
+                                </ul>
+                            </li>
+                            <li>
+                                Пишу код и отдаю его людям —
+                                <a href="https://github.com/idlesign"><i class="fi-social-github"></i> idlesign</a>
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h2>Чёртов гном!</h2>
+
+
+                    <p><img src="static/hl2ep2_gnome.jpg"></p>
+
+
+                    <small><small>Источник снимка из игры — сайт arttea.aiq.ru</small></small>
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <section>
+                        <h3>Python в играх</h3>
+
+                        <p>
+                            <ul class="small">
+                                <li>Civilization IV</li>
+                                <li>Battlefield 2, Battlefield 2141, Battlefield Heroes</li>
+                                <li>Eve Online</li>
+                                <li>Blade of Darkness</li>
+                                <li>Freedom Force</li>
+                                <li>Pirates of the Caribbean Online </li>
+                                <li>World of Tanks</li>
+                                <li>Vampire: The Masquerade – Bloodlines</li>
+                                <li>и пр.</li>
+                            </ul>
+                        <p>
+
+                    </section>
+
+                    <section>
+                        <h2>pyglet</h2>
+
+                        <blockquote><small>
+                            Кросплатформенный, написанный на Питоне, каркас для разработки мультимедийных оконных приложений, игр
+                        </small></blockquote>
+
+                        <p>
+                            <ul class="small">
+                                <li>Использует OpenGL</li>
+                                <li>Работает с изображениями, видео, аудио</li>
+                                <li>Windows, OS X, Linux</li>
+                                <li>Открытая лицензия (BSD)</li>
+                            </ul>
+                        <p>
+                    </section>
+
+                    <section>
+                        <h2>cocos2d (Python)</h2>
+
+                        <blockquote><small>
+                            Каркас для создания двухмерых игр, демок и прочих графических интерактивных приложений
+                        </small></blockquote>
+
+                        <p>
+                            <ul class="small">
+                                <li>Действия, трансформации, эффекты</li>
+                                <li>Сцены и переходы между ними</li>
+                                <li>Тайлы</li>
+                                <li>Скелетная анимация</li>
+                                <li>Обработка столкновений</li>
+                            </ul>
+                        <p>
+                    </section>
+
+                    <section>
+                        <h2>pymunk</h2>
+
+                        <blockquote><small>
+                            Обёртка над библиотекой Chipmunk, реализующий физику твёрдых тел в двухмерном пространстве
+                        </small></blockquote>
+
+                        <p>
+                            <ul class="small">
+                                <li>В терминах пространств и тел</li>
+                                <li>Автогеометрия по изображениям</li>
+                                <li>Кроссплатформенность</li>
+                            </ul>
+                        <p>
+                    </section>
+
+                    <section>
+                        <h2>steampak</h2>
+
+                        <blockquote><small>
+                            Обёртка над библиотекой для платформы Steam от компании Valve
+                        </small></blockquote>
+
+                        <p>
+                            <ul class="small">
+                                <li>Пользователи</li>
+                                <li>Группы</li>
+                                <li>Оверлей</li>
+                                <li>Достижения</li>
+                                <li>и пр.</li>
+                            </ul>
+                        <p>
+                    </section>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+                <section>
+
+                    <section>
+                        <h4>Вызов функций из библиотек на Си</h4>
+                        <p>
+                            <ul class="small">
+                                <li>ctypes</li>
+                                <li>cffi</li>
+                                <li>SWIG</li>
+                                <li>Cython</li>
+                            </ul>
+                        <p>
+                    </section>
+
+                    <section>
+                        <h3>Рекомендации построения API</h3>
+                        <p>
+                            <ul class="small">
+                                <li>Удобство на первом месте</li>
+                                <li>Сгенерированные обёртки обычно плохи</li>
+                                <li>Не обязательно повторять оригинал</li>
+                            </ul>
+                        <p>
+                    </section>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h3>Ссылки</h3>
+
+                    <ul class="small">
+
+                        <li class="marg__b"><a href="https://bitbucket.org/pyglet/pyglet/wiki/Home">Каркас pyglet</a></li>
+
+                        <li><a href="http://cocos2d.org/">Каркасы Cocos2d</a></li>
+                        <li class="marg__b"><a href="http://python.cocos2d.org/">Каркас Cocos2d (Python)</a></li>
+
+                        <li><a href="http://chipmunk-physics.net/">Библиотека Chipmunk</a></li>
+                        <li class="marg__b"><a href="http://www.pymunk.org/">Библиотека pymunk</a></li>
+
+                        <li><a href="https://github.com/idlesign/steampak">Библиотека steampak</a></li>
+
+                    </ul>
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <section>
+                        <h2>Спасибо за внимание!</h2>
+                    </section>
+
+                    <section>
+                        <h1>Вопросы?</h1>
+                        <p><small>
+                            <a href="https://github.com/idlesign"><i class="fi-social-github"></i> idlesign</a> &nbsp;
+                            <a href="https://www.linkedin.com/in/idlesign"><i class="fi-social-linkedin"></i> idlesign</a> &nbsp;
+                            <a href="https://twitter.com/idlesign"><i class="fi-social-twitter"></i> idlesign</a> &nbsp;
+                        </small></p>
+
+                        <p><small>
+                            Эти слайды можно найти тут — <a href="http://bit.ly/ist_003">http://bit.ly/ist_003</a>
+                            <br>
+                            <img src="static/qr-slides-games.png">
+                        </small></p>
+
+                    </section>
+                </section>
+
+			</div>
+		</div>
+
+		<script src="../static/revealjs/lib/js/head.min.js"></script>
+		<script src="../static/revealjs/js/reveal.js"></script>
+		<script>
+			Reveal.initialize({
+				controls: true,
+				mouseWheel: true,
+
+				progress: true,
+				history: true,
+				center: true,
+				transition: 'slide',
+				dependencies: [
+					{
+                        src: '../static/revealjs/lib/js/classList.js',
+                        condition: function() { return !document.body.classList; }
+                    },
+					{
+                        src: '../static/revealjs/plugin/highlight/highlight.js',
+                        async: true,
+                        condition: function() { return !!document.querySelector( 'pre code' ); },
+                        callback: function() { hljs.initHighlightingOnLoad(); }
+                    },
+					{ src: '../static/revealjs/plugin/notes/notes.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
