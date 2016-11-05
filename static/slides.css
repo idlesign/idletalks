@@ -1,0 +1,11 @@
+td.va__t {
+    vertical-align: top;
+}
+
+.small li, .small p {
+    font-size: 0.6em;
+}
+
+li.marg__b {
+    margin-bottom: 1em;
+}

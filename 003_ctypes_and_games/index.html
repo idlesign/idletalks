@@ -16,27 +16,8 @@
 		<link rel="stylesheet" href="../static/revealjs/css/reveal.css">
 		<link rel="stylesheet" href="../static/revealjs/css/theme/black.css" id="theme">
 
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? '../static/revealjs/css/print/pdf.css' : '../static/revealjs/css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-
-        <style type="text/css">
-            td.va__t {
-                vertical-align: top;
-            }
-            .small li, .small p {
-                font-size: 0.6em;
-            }
-            li.marg__b {
-                margin-bottom: 1em;
-            }
-
-        </style>
-
+        <link rel="stylesheet" href="../static/slides.css">
+		<script src="../static/slides-print.js"></script>
 	</head>
 
 	<body>
@@ -268,29 +249,6 @@
 
 		<script src="../static/revealjs/lib/js/head.min.js"></script>
 		<script src="../static/revealjs/js/reveal.js"></script>
-		<script>
-			Reveal.initialize({
-				controls: true,
-				mouseWheel: true,
-
-				progress: true,
-				history: true,
-				center: true,
-				transition: 'slide',
-				dependencies: [
-					{
-                        src: '../static/revealjs/lib/js/classList.js',
-                        condition: function() { return !document.body.classList; }
-                    },
-					{
-                        src: '../static/revealjs/plugin/highlight/highlight.js',
-                        async: true,
-                        condition: function() { return !!document.querySelector( 'pre code' ); },
-                        callback: function() { hljs.initHighlightingOnLoad(); }
-                    },
-					{ src: '../static/revealjs/plugin/notes/notes.js', async: true }
-				]
-			});
-		</script>
+		<script src="../static/slides.js"></script>
 	</body>
 </html>
