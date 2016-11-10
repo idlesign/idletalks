@@ -1,11 +1,20 @@
-td.va__t {
-    vertical-align: top;
+.va__t {
+    vertical-align: top !important;
 }
 
 .small li, .small p {
     font-size: 0.6em;
 }
 
+li small {
+    color: #8F8F8F;
+}
+
+pre.small {
+    font-size: 0.45em;
+}
+
 li.marg__b {
     margin-bottom: 1em;
 }
+
