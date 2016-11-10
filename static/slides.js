@@ -6,6 +6,8 @@ Reveal.initialize({
     history: true,
     center: true,
     transition: 'slide',
+    slideNumber: 'c/t',
+
     dependencies: [
         {
             src: '../static/revealjs/lib/js/classList.js',
@@ -16,9 +18,6 @@ Reveal.initialize({
         {
             src: '../static/revealjs/plugin/highlight/highlight.js',
             async: true,
-            condition: function () {
-                return !!document.querySelector('pre code');
-            },
             callback: function () {
                 hljs.initHighlightingOnLoad();
             }
