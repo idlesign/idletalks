@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+		<title>Питоничность в тестировании</title>
+
+		<meta name="description" content="О подходах к тестированию с точки зрения языковой принадлежности">
+		<meta name="author" content="Игорь `idle sign` Стариков">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="../static/foundation-icons/foundation-icons.css" />
+		<link rel="stylesheet" href="../static/revealjs/css/reveal.css">
+		<link rel="stylesheet" href="../static/revealjs/css/theme/black.css" id="theme">
+        <link rel="stylesheet" href="../static/revealjs/lib/css/zenburn.css">
+
+        <link rel="stylesheet" href="../static/slides.css">
+		<script src="../static/slides-print.js"></script>
+	</head>
+
+	<body>
+		<div class="reveal">
+			<div class="slides">
+                <!--
+
+                    Привычки бывают хорошие, а бывают и нет. И хотя в целом привычка покрывать код тестами, безусловно,
+                    заслуживает всяческого поощрения, вопрос о том, к какому именно каркасу для тестирования лучше
+                    привыкать остаётся открытым. Мы в очередной раз попытаемся его закрыть.
+
+                    Ожидаемый уровень подготовки: начальный-средний.
+
+                -->
+                <section>
+                    <section>
+                        <h6>Питоничность в тестировании</h6>
+                        <p><small>
+                            Игорь Стариков / idle sign
+                        </small></p>
+                    </section>
+
+                    <section>
+                        <h2>Автор</h2>
+                        <ul>
+                            <li>Несу Python в массы:
+                                <ul>
+                                    <li>Рассказываю о нём</li>
+                                    <li>Поддерживаю сайт — <a href="http://pythonz.net">pythonz.net</a></li>
+                                    <li>Перевожу и озвучиваю доклады с англоязычных PyCon</li>
+                                </ul>
+                            </li>
+                            <li>
+                                Пишу код и отдаю его людям —
+                                <a href="https://github.com/idlesign"><i class="fi-social-github"></i> idlesign</a>
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <section>
+                        <h2>Задачки на эрудированность</h2>
+                    </section>
+
+                    <section>
+                        <h2>Откуда методы?</h2>
+
+                        <pre><code>setUp()</code></pre>
+                        <pre><code>tearDown()</code></pre>
+
+                        <div class="fragment fade-up">SUnit (Smalltalk; с 1994 года)</div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>Kent Beck</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+
+                    <section>
+                        <h2>Откуда методы?</h2>
+
+                        <pre><code>assertTrue()</code></pre>
+                        <pre><code>assertFalse()</code></pre>
+                        <pre><code>assertEquals()</code></pre>
+
+                        <div class="fragment fade-up">JUnit (Java; с 1998 года)</div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>Erich Gamma</li>
+                                <li>Банда четырёх. «Шаблоны проектирования» (C++, Smalltalk), 1994</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+
+                    <section>
+                        <h2>Откуда методы?</h2>
+
+                        <pre><code>assertEqual()</code></pre>
+                        <pre><code>assertIsNone()</code></pre>
+                        <pre><code>assertIn()</code></pre>
+
+                        <div class="fragment fade-up">PyUnit (Python; с конца 1999 года),<br>он же unittest (c 2001 года)</div>
+                    </section>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <section>
+                        <h2>Питоничность</h2>
+
+                        <div><small>Применительно к стилю кода.</small></div>
+
+                        <blockquote>
+                            Использование характерных особенностей языка,
+                            позволяющее сохранить и подчеркнуть его сильные стороны, такие как лаконичность
+                            и лёгкость прочтения.
+                        </blockquote>
+                    </section>
+
+                    <section>
+                        <h2>Переводчик на Питон</h2>
+
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    <pre><code>assertIn(a, b)</code></pre>
+                                </td>
+                                <td><div class="fragment">
+                                    <pre><code>assert_in(a, b)</code></pre>
+                                </div></td>
+                            </tr>
+
+                            <tr>
+                                <td><div class="fragment">
+                                    <pre><code>assertLessEqual(a, b)</code></pre>
+                                </div></td>
+                                <td><div class="fragment">
+                                    <pre><code>assert_lte(a, b)</code></pre>
+                                </div></td>
+                            </tr>
+
+                            <tr>
+                                <td><div class="fragment">
+                                    <pre><code>assertEqual(a, b)</code></pre>
+                                </div></td>
+                                <td><div class="fragment">
+                                    <pre><code>assert_equal(a, b)</code></pre>
+                                </div></td>
+                            </tr>
+
+                            <tr>
+                                <td><div class="fragment">
+                                    <pre><code>assertNotEqual(a, b)</code></pre>
+                                </div></td>
+                                <td><div class="fragment">
+                                    <pre><code>assert_not_equal(a, b)</code></pre>
+                                </div></td>
+                            </tr>
+
+                        </table>
+
+                        <div class="fragment fade-up">Testify — A more pythonic testing framework (c 2010 года)</div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>От Yelp</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+
+                    <section>
+                        <h2>Есть способ лучше</h2>
+
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    <pre><code>assertIn(a, b)</code></pre>
+                                </td>
+                                <td><div class="fragment">
+                                    <pre><code>assert a in b</code></pre>
+                                </div></td>
+                            </tr>
+
+                            <tr>
+                                <td><div class="fragment">
+                                    <pre><code>assertLessEqual(a, b)</code></pre>
+                                </div></td>
+                                <td><div class="fragment">
+                                    <pre><code>assert a <= b</code></pre>
+                                </div></td>
+                            </tr>
+
+                            <tr>
+                                <td><div class="fragment">
+                                    <pre><code>assertEqual(a, b)</code></pre>
+                                </div></td>
+                                <td><div class="fragment">
+                                    <pre><code>assert a == b</code></pre>
+                                </div></td>
+                            </tr>
+
+                            <tr>
+                                <td><div class="fragment">
+                                    <pre><code>assertNotEqual(a, b)</code></pre>
+                                </div></td>
+                                <td><div class="fragment">
+                                    <pre><code>assert a != b</code></pre>
+                                </div></td>
+                            </tr>
+
+                        </table>
+
+                        <div class="fragment fade-up">pytest (c 2007 года)</div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>Выделен из <strong>py</strong> в 2010</li>
+                                <li>Holger Krekel</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+
+                    <section>
+                        <h2>И doctest</h2>
+
+                        <table width="100%">
+                            <tr>
+                                <td>
+
+                                    <pre class="small"><code class="python" data-trim contenteditable>
+def increment(x):
+    """Добавляет 1 (единицу) к
+    указанному x и возвращает результат.
+
+    Примеры:
+
+    >>> increment(1)
+    2
+
+    >>> increment(154)
+    155
+
+    """
+    return x + 1
+
+
+import doctest
+doctest.testmod(verbose=True)
+                                    </code></pre>
+
+                                </td>
+                                <td>
+                                    <pre class="small fragment"><code data-trim contenteditable>
+Trying:
+    increment(1)
+Expecting:
+    2
+ok
+Trying:
+    increment(154)
+Expecting:
+    155
+ok
+1 items had no tests:
+    __main__
+1 items passed all tests:
+   2 tests in __main__.increment
+2 tests in 2 items.
+2 passed and 0 failed.
+Test passed.
+Out[5]:
+TestResults(failed=0, attempted=2)
+                                    </code></pre>
+                                </td>
+
+                            </tr>
+
+                        </table>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>Tim Peters</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+
+
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+
+                    <section>
+                        <h3>pytest — это возможности</h3>
+
+                        <ul>
+                            <li>запуска тестов unittest, doctest, nose</li>
+                            <li>контроля над выборкой тестов</li>
+                            <li>досрочной остановки тестирования</li>
+                            <li>перехода в режим отладки в pdb</li>
+                            <li>профилирования</li>
+                            <li>отправки результатов в pastebin-сервис</li>
+                            <li>контроля над используемыми дополнениями*</li>
+                            <li>и другие&hellip;</li>
+                        </ul>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>doctest: --doctest-glob='*.rst' --doctest-modules</li>
+                                <li>xunit: setup/terdown_module/class/method/function</li>
+                                <li>контроль выборки: путь, модуль, тест, тест по части имени (-k); перезапуск только упавших</li>
+                                <li>остановки: -x, --maxfail=2</li>
+                                <li>профилирование: --durations=10</li>
+                                <li>pastebin: --pastebin=failed - bpaste.net</li>
+                                <li>дополнения: -p no:doctest</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+
+                    <section>
+                        <h3>pytest — это удобства</h3>
+
+<pre><code data-trim contenteditable>
+# Параметризация.
+# ===============
+@pytest.mark.parametrize('username', ['user1', 'user2'])
+def test_username(username):
+    assert username == 'user1'
+
+# Сравнение значений: ожидание — реальность.
+# ==========================================
+def test_sets():
+    assert set('123') == set('12')
+    # Extra items in the left set: '3'
+
+def test_lists():
+    assert [1, 2, 3] == [1, 4, 3]
+    # At index 1 diff: 2 != 4
+</code></pre>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>@pytest.mark.parametrize('username', ['user1'])</li>
+                                <li>assert set("1308") == set("8035")</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+
+                    <section>
+                        <h4>pytest — это фикстуры</h4>
+
+                        <blockquote>
+                            Фикстура — подготовленное окружение, необходимое для запуска и стабильного выполнения теста.
+                        </blockquote>
+
+                    </section>
+
+                    <section>
+                        <h4>Пример 1. Имитация MongoDB</h4>
+
+<pre><code data-trim contenteditable>
+@pytest.fixture(autouse=True)
+def mock_mongo(monkeypatch):
+    """Фикстура, подменяющая Mongo на mongomock."""
+    monkeypatch.setattr(
+        'mongoengine.connection._connection_settings', {
+            'mydb': {
+                'name': 'fake', 'username': '', 'password': ''
+            }
+    })
+    monkeypatch.setattr(
+        'mongoengine.connection.MongoClient', mongomock.MongoClient
+    )
+</code></pre>
+                    </section>
+
+                    <section>
+                        <h4>Пример 2. Фикстуры данных</h4>
+
+<pre><code data-trim contenteditable>
+@pytest.fixture
+def read_fixture(request):
+    """Считывает указанный файл из директории fixtures,
+    находящейся в директории с тестовым модулем.
+
+    """
+    path_module = dirname(abspath(request.module.__file__))
+    path_fixtures = join(path_module, 'fixtures')
+
+    def read_it(fname):
+        with open(join(path_fixtures, fname)) as f:
+            return f.read()
+
+    return read_it
+</code></pre>
+
+<pre><code data-trim contenteditable>
+def test_something(read_fixture):
+    data = read_fixture('mydata.file')
+    ...
+</code></pre>
+
+                    </section>
+
+                    <section>
+                        <h4>Встроенные фикстуры</h4>
+
+                        <ul>
+                            <li>cache</li>
+                            <li>capsys / capfd</li>
+                            <li>doctest_namespace</li>
+                            <li>pytestconfig</li>
+                            <li>record_xml_property</li>
+                            <li>monkeypatch</li>
+                            <li>recwarn</li>
+                            <li>tmpdir / tmpdir_factory</li>
+                        </ul>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>@pytest.fixture(scope="module/session/class/function", autouse=True)</li>
+                                <li>кеш: сохранение состояния между запусками скрипта</li>
+                                <li>доступ к дескрипторам</li>
+                                <li>doctest_namespace: добавление эл-тов в область видимости doctest</li>
+                                <li>record_xml_property: JUnitXML</li>
+                                <li>заплатка: атрибут, sys.path, окружение, текущая директория, значение по ключу</li>
+                                <li>recwarn: запись предупреждений</li>
+                                <li>доступ к временным файлам</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+
+                    <section>
+                        <h4>pytest — это сторонние дополнения</h4>
+                        <pre><code>$ pip install pytest-*</code></pre>
+
+                        <table>
+                            <tr>
+                                <td class="va__t">
+                                    <ul>
+                                        <li>aiohttp ∙ asyncio</li>
+                                        <li>bdd</li>
+                                        <li>benchmark ∙ timeit</li>
+                                        <li>blocker ∙ cagoule ∙ ordering</li>
+                                        <li>bugzilla ∙ gihub ∙ jira ∙ trello</li>
+                                        <li>cloud ∙ xdist</li>
+                                    </ul>
+                                </td>
+                                <td class="va__t">
+                                    <ul>
+                                        <li>c ∙ cython</li>
+                                        <li>django ∙ flask ∙ tornado ∙ twisted</li>
+                                        <li>excel ∙ html ∙ json</li>
+                                        <li>factoryboy</li>
+                                        <li>flake ∙ pep-8 ∙ pep-257</li>
+                                        <li>mongo ∙ postgresql</li>
+                                        <li>qt ∙ selenium</li>
+                                        <li>и т.д. и т.д.</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>blocker — пропустить тесты после упавшего</li>
+                                <li>cagoule — запустить тесты на только изменённый код</li>
+                                <li>cloud / xdist — распараллеливание</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h3>Ссылки</h3>
+
+                    <ul>
+
+                        <li>
+                            <a href="https://wiki.python.org/moin/PythonTestingToolsTaxonomy">
+                                Таксономия инструментов для тестирования в Python</a>
+                            <small>англ. python.org</small>
+                        </li>
+                        <li>
+                            <a href="http://pytest.org">Сайт каркаса «pytest»</a>
+                            <small>англ. pytest.org</small>
+                        </li>
+                        <li>
+                            <a href="http://plugincompat.herokuapp.com/">
+                                Таблица совместимости плагинов pytest с версиями Python</a>
+                            <small>англ. herokuapp.com</small>
+                        </li>
+                        <li>
+                            <a href="https://habrahabr.ru/post/269759/">«PyTest»</a>
+                            <small>habrahabr.ru</small>
+                        </li>
+                        <li>
+                            <a href="https://habrahabr.ru/company/yandex/blog/242795/">
+                                «Как в Яндексе используют PyTest и другие фреймворки для функционального тестирования»</a>
+                            <small>habrahabr.ru</small>
+                        </li>
+                    </ul>
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <section>
+                        <h2>Спасибо за внимание!</h2>
+                    </section>
+
+                    <section>
+                        <h1>Вопросы?</h1>
+                        <p><small>
+                            <a href="https://github.com/idlesign"><i class="fi-social-github"></i> idlesign</a> &nbsp;
+                            <a href="https://www.linkedin.com/in/idlesign"><i class="fi-social-linkedin"></i> idlesign</a> &nbsp;
+                            <a href="https://twitter.com/idlesign"><i class="fi-social-twitter"></i> idlesign</a> &nbsp;
+                        </small></p>
+
+                        <p><small>
+                            Эти слайды можно найти тут — <a href="http://bit.ly/ist_004">http://bit.ly/ist_004</a>
+                            <br>
+                            <img src="static/qr-slides-pytests.png">
+                        </small></p>
+
+                    </section>
+                </section>
+
+			</div>
+		</div>
+
+		<script src="../static/revealjs/lib/js/head.min.js"></script>
+		<script src="../static/revealjs/js/reveal.js"></script>
+		<script src="../static/slides.js"></script>
+	</body>
+</html>
