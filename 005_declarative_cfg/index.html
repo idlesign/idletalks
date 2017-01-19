@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+		<title>Декларативное конфигурирование пакетов Python</title>
+
+		<meta name="description" content="О возможности декларативного конфигурирования пакетов Python">
+		<meta name="author" content="Игорь `idle sign` Стариков">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="../static/foundation-icons/foundation-icons.css" />
+		<link rel="stylesheet" href="../static/revealjs/css/reveal.css">
+		<link rel="stylesheet" href="../static/revealjs/css/theme/black.css" id="theme">
+        <link rel="stylesheet" href="../static/revealjs/lib/css/zenburn.css">
+
+        <link rel="stylesheet" href="../static/slides.css">
+		<script src="../static/slides-print.js"></script>
+	</head>
+
+	<body>
+		<div class="reveal">
+			<div class="slides">
+                <!--
+
+                    Если вы когда-нибудь оформляли свои приложения в пакеты, чтобы другие могли с лёгкостью
+                    их устанавливать и использовать, то наверняка знакомы с файлами setup.py и setup.cfg.
+                    А помните, что в setup.cfg отчего-то нельзя настроить параметры, задаваемые в setup.py?
+                    Забудьте.
+
+                    Ожидаемый уровень подготовки: начальный-средний.
+
+                -->
+                <section>
+                    <section>
+                        <h6>Декларативное конфигурирование пакетов Python</h6>
+                        <p><small>
+                            Игорь Стариков / idle sign
+                        </small></p>
+
+                    </section>
+
+                    <section>
+                        <h2>Автор</h2>
+                        <ul>
+                            <li>Несу Python в массы:
+                                <ul>
+                                    <li>Рассказываю о нём</li>
+                                    <li>Поддерживаю сайт — <a href="http://pythonz.net">pythonz.net</a></li>
+                                    <li>Перевожу и озвучиваю доклады с англоязычных PyCon</li>
+                                </ul>
+                            </li>
+                            <li>
+                                Пишу код и отдаю его людям —
+                                <a href="https://github.com/idlesign"><i class="fi-social-github"></i> idlesign</a>
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h4>setup.py</h4>
+
+                    <pre class="smaller"><code class="python" data-trim contenteditable>
+setup(
+    version='.'.join(map(str, VERSION)),
+    long_description=codecs.open(os.path.join(BASE, 'README.rst')).read(),
+    packages=find_packages(exclude=['tests*']),
+
+    name='mypackage',
+    url='http://idlesign.github.io/idletalks/005_declarative_cfg/',
+    description='My demo package',
+    license='BSD 3-Clause License',
+    author='me',
+    package_data={
+        'src.extra': ['*.tar.gz', '*.dat']
+    },
+    entry_points={
+        'console_scripts': ['myrunner=src.cli:main'],
+    },
+    zip_safe=False,
+    install_requires=['cryptography>=1.1'],
+    tests_require=['pytest'],
+    extras_require={
+        'virtualize': ['virtualenv>=1.10'],
+    },
+    classifiers=[
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 3.6',
+    ],
+)
+                    </code></pre>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h2>setuptools</h2>
+
+                    <p>Декларативное конфигурирование доступно начиная с версии 30.4.0</p>
+
+                    <pre><code class="python" data-trim contenteditable>
+setup(setup_requires=['setuptools>=30.4.0'])
+                    </code></pre>
+
+                </section>
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h4>setup.cfg</h4>
+
+                    <pre class="smaller"><code class="ini" data-trim contenteditable>
+[metadata]
+name = mypackage
+version = attr: src.VERSION
+url = http://idlesign.github.io/idletalks/005_declarative_cfg/
+author = me
+description = My demo package
+long_description = file: README.rst
+license = BSD 3-Clause License
+
+[metadata.classifiers]
+Operating System :: OS Independent
+Programming Language :: Python :: 3.6
+
+[options]
+packages = find:
+zip_safe = False
+install_requires = cryptography>=1.1
+tests_require = pytest
+
+[options.packages.find]
+exclude = tests*
+
+[options.extras_require]
+virtualize = virtualenv>=1.10
+
+[options.package_data]
+src.extra = *.tar.gz, *.dat
+
+[options.entry_points]
+console_scripts = myrunner = src.cli:main
+                    </code></pre>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h4>Программный интерфейс</h4>
+
+                    <pre class="small"><code class="python" data-trim contenteditable>
+from setuptools.config import read_configuration
+
+
+conf_dict = read_configuration('setup.cfg', ignore_option_errors=True)
+                    </code></pre>
+
+                    <pre class="smaller"><code class="python" data-trim contenteditable>
+{
+    'options': {
+        'entry_points': {'console_scripts': ['myrunner = src.cli:main']},
+        'extras_require': {'virtualize': ['virtualenv>=1.10']}, 'install_requires': ['cryptography>=1.1'],
+        'package_data': {'src.extra': ['*.tar.gz', '*.dat']}, 'zip_safe': False, 'packages': [],
+        'tests_require': ['pytest']
+    },
+    'metadata': {
+        'name': 'mypackage', 'license': 'BSD 3-Clause License', 'author': 'me',
+        'url': 'http://idlesign.github.io/idletalks/005_declarative_cfg/',
+        'classifiers': ['Operating System :: OS Independent', 'Programming Language :: Python :: 3.6'],
+        'long_description': 'file: README.rst', 'description': 'My demo package'
+    }
+}
+                    </code></pre>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h4>Читаем setup.cfg из mock</h4>
+                    <small>(пакет mock использует пакет pbr)</small>
+
+                    <pre class="smaller"><code class="python" data-trim contenteditable>
+{
+    'metadata': {
+        'description': 'Rolling backport of unittest.mock for all Pythons', 'author': 'Testing Cabal',
+        'url': 'https://github.com/testing-cabal/mock', 'author_email': 'testing-in-python@lists.idyll.org',
+        'classifiers': ['Development Status :: 5 - Production/Stable', ...], 'name': 'mock'
+    }
+}
+                    </code></pre>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h3>Ссылки</h3>
+
+                    <ul>
+
+                        <li>
+                            <a href="http://pythonz.net/articles/81/">
+                                Декларативная конфигурация пакетов Питона</a>
+                            <small>pythonz.net</small>
+                        </li>
+                        <li>
+                            <a href="https://setuptools.readthedocs.io/en/latest/setuptools.html#configuring-setup-using-setup-cfg-files">
+                                Configuring setup() using setup.cfg files</a>
+                            <small>англ. setuptools.readthedocs.io</small>
+                        </li>
+                    </ul>
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <section>
+                        <h2>Спасибо за внимание!</h2>
+                    </section>
+
+                    <section>
+                        <h1>Вопросы?</h1>
+                        <p><small>
+                            <a href="https://github.com/idlesign"><i class="fi-social-github"></i> idlesign</a> &nbsp;
+                            <a href="https://www.youtube.com/user/idlesign"><i class="fi-social-youtube"></i> idlesign</a> &nbsp;
+                            <a href="https://twitter.com/idlesign"><i class="fi-social-twitter"></i> idlesign</a> &nbsp;
+                        </small></p>
+
+                        <p><small>
+                            Эти слайды можно найти тут — <a href="http://bit.ly/ist_005">http://bit.ly/ist_005</a>
+                            <br>
+                            <img src="static/qr-slides-declarative.png">
+                        </small></p>
+
+                    </section>
+                </section>
+
+			</div>
+		</div>
+
+		<script src="../static/revealjs/lib/js/head.min.js"></script>
+		<script src="../static/revealjs/js/reveal.js"></script>
+		<script src="../static/slides.js"></script>
+	</body>
+</html>
