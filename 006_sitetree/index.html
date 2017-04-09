@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+		<title>django-sitetree: навигация для сайта</title>
+
+		<meta name="description" content="Об основных возможностях django-sitetree">
+		<meta name="author" content="Игорь `idle sign` Стариков">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="../static/foundation-icons/foundation-icons.css" />
+		<link rel="stylesheet" href="../static/revealjs/css/reveal.css">
+		<link rel="stylesheet" href="../static/revealjs/css/theme/black.css" id="theme">
+        <link rel="stylesheet" href="../static/revealjs/lib/css/zenburn.css">
+
+        <link rel="stylesheet" href="../static/slides.css">
+		<script src="../static/slides-print.js"></script>
+	</head>
+
+	<body>
+		<div class="reveal">
+			<div class="slides">
+                <!--
+
+                    Сложно ли реализовать навигацию для сайта? Разместить на его страницах различного вида меню,
+                    навигационные цепочки, предоставить пользователю структурную карту.
+                    Давайте ознакомимся с подходом, использующемся в sitetree, который позволяет решать
+                    подобные задачи минимальными усилиями.
+
+                    Ожидаемый уровень подготовки: начальный-средний.
+
+                -->
+                <section>
+                    <section>
+                        <h6>django-sitetree: навигация для сайта</h6>
+                        <p><small>
+                            Игорь Стариков / idle sign
+                        </small></p>
+
+                    </section>
+
+                    <section>
+                        <h2>Автор</h2>
+                        <ul>
+                            <li>Несу Python в массы:
+                                <ul>
+                                    <li>Рассказываю о нём</li>
+                                    <li>Поддерживаю сайт — <a href="http://pythonz.net">pythonz.net</a></li>
+                                    <li>Перевожу и озвучиваю доклады с англоязычных PyCon</li>
+                                </ul>
+                            </li>
+                            <li>
+                                Пишу код и отдаю его людям —
+                                <a href="https://github.com/idlesign"><i class="fi-social-github"></i> idlesign</a>
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h2>django-sitetree</h2>
+
+                    <ul>
+                        <li>меню</li>
+                        <li>навигационные цепочки</li>
+                        <li>карта сайта</li>
+                        <li class="fragment fade-up">заголовки страниц</li>
+                        <li class="fragment fade-up">описания для страниц</li>
+                        <li class="fragment fade-up">заметки для страниц</li>
+                    </ul>
+
+                    <aside class="notes">
+                        <ul>
+                            <li>весна 2010</li>
+                            <li>отсутствие обобщённого решения</li>
+                        </ul>
+                    </aside>
+
+                </section>
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <section>
+                        <h2>Особенности 1/2</h2>
+
+                        <ul>
+                            <li class="fragment fade-up">простота использования</li>
+                            <li class="fragment fade-up">ограничение доступа к элементам</li>
+                            <li class="fragment fade-up">механизмы интернационализации</li>
+                            <li class="fragment fade-up">статичные дерева*</li>
+                            <li class="fragment fade-up">динамические дерева*</li>
+                        </ul>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>статичные управляются через адм. панель</li>
+                                <li>динамические могут быть превращены в статичные</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+
+                    <section>
+                        <h2>Особенности 2/2</h2>
+
+                        <ul>
+                            <li class="fragment fade-up">шаблоны в комплекте: простой, Foundation, Bootstrap, Semantic UI</li>
+                            <li class="fragment fade-up">поддержка пользовательских шаблонов</li>
+                            <li class="fragment fade-up">поддержка пользовательских моделей</li>
+                            <li class="fragment fade-up">динамические модификаторы деревьев</li>
+                            <li class="fragment fade-up">и пр.</li>
+                        </ul>
+                    </section>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h2>Демонстрация</h2>
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <section>
+                        <h4>Будем брать?</h4>
+
+
+                        <small>
+                            <a href="https://python.org/">python.org</a>
+                            <a href="https://python.org/"><img src="static/shot-pythonorg.png"></a>
+                        </small>
+
+                    </section>
+
+                    <section>
+                        <small>
+                            <a href="http://pythonz.net/">pythonz.net</a>
+                            <a href="http://pythonz.net/"><img src="static/shot-pythonznet.png"></a>
+                        </small>
+
+                        <small>
+                            См. также: <a href="https://djangopackages.org/grids/g/navigation/">Django Packages : Navigation</a>
+                        </small>
+                    </section>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h3>Запчасти для сайтов django-site*</h3>
+
+                    <ul>
+                        <li><a href="https://pypi.python.org/pypi/django-siteblocks">django-siteblocks</a></li>
+                        <li><a href="https://pypi.python.org/pypi/django-sitecats">django-sitecats</a></li>
+                        <li><a href="https://pypi.python.org/pypi/django-siteflags">django-siteflags</a></li>
+                        <li><a href="https://pypi.python.org/pypi/django-sitegate">django-sitegate</a></li>
+                        <li><a href="https://pypi.python.org/pypi/django-sitemessage">django-sitemessage</a></li>
+                        <li><a href="https://pypi.python.org/pypi/django-sitecats">django-siteprefs</a></li>
+                        <li><a href="https://pypi.python.org/pypi/django-sitetree">django-sitetree</a></li>
+                    </ul>
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+                <section>
+                    <section>
+                        <h2>Спасибо за внимание!</h2>
+                    </section>
+
+                    <section>
+                        <h1>Вопросы?</h1>
+                        <p><small>
+                            <a href="https://github.com/idlesign"><i class="fi-social-github"></i> idlesign</a> &nbsp;
+                            <a href="https://www.youtube.com/user/idlesign"><i class="fi-social-youtube"></i> idlesign</a> &nbsp;
+                            <a href="https://twitter.com/idlesign"><i class="fi-social-twitter"></i> idlesign</a> &nbsp;
+                        </small></p>
+
+                        <p><small>
+                            Эти слайды можно найти тут — <a href="http://idlesign.github.io/idletalks/006_sitetree">http://bit.ly/ist_006</a>
+                            <br>
+                            <img src="static/qr-slides-sitetree.png">
+                        </small></p>
+
+                    </section>
+                </section>
+
+			</div>
+		</div>
+
+		<script src="../static/revealjs/lib/js/head.min.js"></script>
+		<script src="../static/revealjs/js/reveal.js"></script>
+		<script src="../static/slides.js"></script>
+	</body>
+</html>
