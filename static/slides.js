@@ -8,6 +8,11 @@ Reveal.initialize({
     transition: 'slide',
     slideNumber: 'c/t',
 
+    keyboard: {
+        37: 'prev', // left arrow
+        39: 'next' // right arrow
+    },
+
     dependencies: [
         {
             src: '../static/revealjs/lib/js/classList.js',
