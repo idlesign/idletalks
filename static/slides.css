@@ -1,31 +1,55 @@
-.va__t {
-    vertical-align: top !important;
+.ya {
+  font-family: Arial, sans-serif;
+  text-transform: none;
+}
+.ya a {
+  color: #0077ff;
+}
+.ya h1, .ya h2, .ya h3 {
+  font-family: Arial, sans-serif;
+  text-transform: none;
+}
+.ya li > code {
+  color: #ff9a00;
+}
+
+.faded {
+  color: #8F8F8F;
+}
+
+.wide {
+  width: 100%;
 }
 
 .small li, .small p {
-    font-size: 0.6em;
+  font-size: 0.6em;
 }
 
 li small {
-    color: #8F8F8F;
+  color: #8F8F8F;
 }
 
 pre.small {
-    font-size: 0.45em;
+  font-size: 0.45em;
 }
 
 pre.smaller {
-    font-size: 0.3em;
+  font-size: 0.3em;
+}
+
+.reveal.reveal img {
+  border: none;
+  box-shadow: none;
+  max-height: calc(60vh);
+  max-width: calc(60vw);
+}
+
+.va__t {
+  vertical-align: top !important;
 }
 
 li.marg__b {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
-.reveal.reveal img
-{
-    border: none;
-    box-shadow: none;
-    max-height: calc(60vh);
-    max-width: calc(60vw);
-}
+/*# sourceMappingURL=slides.css.map */
