@@ -1,0 +1,76 @@
+$ya-cl-yellow: rgb(255,204,0);
+$ya-cl-red: rgb(255,51,51);
+$ya-cl-blue: rgb(0,119,255);
+
+$ya-cl-green: rgb(35,179,36);
+$ya-cl-violet: rgb(104,56,207);
+$ya-cl-sky: rgb(93,206,249);
+$ya-cl-pink: rgb(198,44,208);
+$ya-cl-orange: rgb(255,154,0);
+
+$cl-black: rgb(0,0,0);
+$cl-white: rgb(255,255,255);
+$cl-gray: #8F8F8F;
+
+$ya-fnt-face: Arial, sans-serif;
+
+@mixin ya-font {
+    font-family: $ya-fnt-face;
+    text-transform: none;
+}
+
+.ya {
+    @include ya-font;
+
+    a {
+        color: $ya-cl-blue;
+    }
+
+    h1, h2, h3 {
+        @include ya-font;
+    }
+
+    li>code {
+        color: $ya-cl-orange;
+    }
+}
+
+.faded {
+    color: $cl-gray;
+}
+
+.wide {
+    width: 100%;
+}
+
+.small li, .small p {
+    font-size: 0.6em;
+}
+
+li small {
+    color: $cl-gray;
+}
+
+pre.small {
+    font-size: 0.45em;
+}
+
+pre.smaller {
+    font-size: 0.3em;
+}
+
+.reveal.reveal img
+{
+    border: none;
+    box-shadow: none;
+    max-height: calc(60vh);
+    max-width: calc(60vw);
+}
+
+.va__t {
+    vertical-align: top !important;
+}
+
+li.marg__b {
+    margin-bottom: 1em;
+}
