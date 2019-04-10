@@ -60,6 +60,495 @@
                 </section>
                 <!---------------------------------------------------------------------------------------------------------------->
 
+                <section>
+
+                    <section data-background-color="rgb(255,204,0)">
+                        <h2>История вопроса</h2>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>Когда появилась поддержка аннотаций? </li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h3>PEP 3107 Аннотации функций</h3>
+
+                        <div class="faded"><small>2006 год. Python 3.0</small></div>
+
+                        <ul>
+                            <li class="fragment fade-up">Привязка выражения на этапе компиляции</li>
+                            <li class="fragment fade-up">Необязательность</li>
+                            <li class="fragment fade-up">Нет требований к смыслу</li>
+                            <li class="fragment fade-up">В атрибуте <code>__annotations__</code></li>
+
+                        </ul>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>В 2 нет стандарта аннотирования.</li>
+                                <li>Альтернатива: декораторы, строки документации.</li>
+                                <li>Что знаем о PEP?</li>
+                                <li>Смысл аннотаций — задача библиотек.</li>
+                                <li>Не для лямбд</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+
+                    <section>
+                        <h3>PEP 484 Указание типов</h3>
+
+                        <div class="faded"><small>2014 год. Python 3.5</small></div>
+
+                        <ul>
+                            <li class="fragment fade-up">Статическая и динамическая проверки</li>
+                            <li class="fragment fade-up">Облегчение реорганизации кода</li>
+                            <li class="fragment fade-up">Кодогенерация</li>
+                            <li class="fragment fade-up">Новый стандартный смысл для аннотаций</li>
+                        </ul>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>ван Россум переключился после Tulip</li>
+                                <li>0482 — Литературный обзор указаний типов. Ланга</li>
+                                <li>0483 — Теория указаний типов. Россум, Левкивский</li>
+                                <li>Вдохновлено mypy.</li>
+                                <li>В 3.8 хотели запретить использование для всего, кроме типов, но передумами — PEP 563</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+
+                    <section>
+                        <h3>PEP 526<br>Синтаксис для аннотаций переменных</h3>
+
+                        <div class="faded"><small>2016 год. Python 3.6</small></div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>Рекомендуется для аннотаций типов</li>
+
+                            </ul>
+                        </aside>
+                    </section>
+
+
+                    <section>
+                        <h3>PEP 563<br>Отложенное вычисление аннотаций</h3>
+
+                        <div class="faded"><small>2017 год. Python 3.7</small></div>
+
+                        <ul>
+                            <li class="fragment fade-up"><code>from __future__ import annotations</code></li>
+                            <li class="fragment fade-up">3.8 — напоминание, если нет импорта</li>
+                            <li class="fragment fade-up">3.9 — строгое напоминание</li>
+                            <li class="fragment fade-up">4.0 — включено безоговорочно</li>
+
+                        </ul>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>Нет обратной совместимости, если не используются get_type_hints или eval</li>
+                                <li>PendingDeprecationWarning, DeprecationWarning</li>
+                                <li>4.0 — все аннотации в строках</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+
+                    <section>
+                        <h3>PEP 585 Соглашения для удобства пользования аннотациями типов</h3>
+
+                        <div class="faded"><small>2019 год. Python 3.8</small></div>
+
+                        <ul>
+                            <li class="fragment fade-up">Импорты только для аннотаций</li>
+                            <li class="fragment fade-up">Разница между <code>List</code> и <code>list</code> и т.п.</li>
+                            <li class="fragment fade-up">Неожиданное в typing: <code>ABC</code>s, <code>NamedTuple</code></li>
+                        </ul>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>Какие проблемы решает?</li>
+                                <li>Чтобы статика не задевала исполнение</li>
+                                <li>псевдонимы, приведение, NewType, TypeVar</li>
+
+                            </ul>
+                        </aside>
+                    </section>
+
+                </section>
+
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+
+                    <section data-background-color="rgb(255,204,0)">
+                        <h2>Кому пожать руку</h2>
+                    </section>
+
+                    <section>
+
+                        <table>
+                            <tr>
+                                <td>
+                                    <a href="https://github.com/JukkaL"><img data-src="static/av_lehtosalo.png" height="30%"></a><br>
+                                    <small>Юкка Лехтосало</small>
+                                </td>
+                                <td>
+                                    <a href="https://github.com/gvanrossum"><img data-src="static/av_rossum.jpg" height="30%"></a><br>
+                                    <small>Гвидо ван Россум</small>
+                                </td>
+                                <td>
+                                    <a href="https://github.com/ambv"><img data-src="static/av_langa.jpg" height="30%"></a><br>
+                                    <small>Лукаш Ланга</small>
+                                </td>
+                                <td>
+                                    <a href="https://github.com/ilevkivskyi"><img data-src="static/av_levkivskyi.jpg" height="30%"></a><br>
+                                    <small>Иван Левкивский</small>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div class="faded">и сотни других замечательных разработчиков</div>
+
+                    </section>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section data-background-color="#000">
+                    <h2>Любители старины</h2>
+
+                    <ul>
+                        <li class="fragment fade-up">Обратное портирование</li>
+                        <li class="fragment fade-up">Деаннотация</li>
+                    </ul>
+
+                    <aside class="notes">
+                        <ul>
+                            <li>Портирование — декораторы, докстроки</li>
+                            <li>Деаннотация — Dynamo-mypy</li>
+                        </ul>
+                    </aside>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+
+                <section>
+
+                    <section data-background-color="rgb(255,204,0)">
+                        <h2>Применение</h2>
+                    </section>
+
+                    <section>
+                        <h3>Проверка типов</h3>
+
+                        <ul class="wide">
+                            <li class="fragment fade-up">Статическая —
+                                <a href="https://pypi.org/project/mypy/">mypy</a>,
+                                <a href="https://pypi.org/project/pyre-check/">pyre</a>,
+                                <a href="https://pypi.org/project/pytype/">pytype</a>
+
+                                <pre><code class="hljs" data-line-numbers data-trim data-noescape>
+                                    $ mypy myapp.py
+                                    $ pyre check
+                                </code></pre>
+
+                            </li>
+                            <li class="fragment fade-up">Динамическая —
+                                <a href="https://pypi.org/project/typeguard/">typeguard</a>
+
+                                <pre><code class="hljs" data-line-numbers="4" data-trim data-noescape>
+                                    from typeguard import check_argument_types
+
+                                    def some_function(a: int, b: float, c: str):
+                                        assert check_argument_types()
+
+                                </code></pre>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>Усиление анализатора в IDE</h3>
+
+                        <img data-src="static/ex_pycharm.png">
+
+                    </section>
+
+                    <section>
+                        <h3>Автодокументирование</h3>
+
+                        <a href="https://pypi.org/project/sphinx-autodoc-typehints/">sphinx-autodoc-typehints</a>
+
+                        <pre><code class="hljs" data-line-numbers="2-5" data-trim data-noescape>
+                            def add_me(arg1):
+                                """
+                                :param int arg1:
+                                :rtype: int
+                                """
+                                return arg1 + arg1
+
+
+                            def add_me_new(arg1: int) -> int:
+                                return arg1 + arg1
+                        </code></pre>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>Обычный текст вместо аннотации не поместишь правда.</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+
+
+                    <section>
+                        <h3>Обработка аргументов для CLI</h3>
+
+                        <a href="https://pypi.org/project/clizy/">clizy</a>
+
+                        <pre><code class="hljs" data-trim data-noescape>
+
+                            def command(req: str, *, opt1: int = 10, opt2: bool = False):
+                                ...
+
+                        </code></pre>
+
+                    </section>
+
+                    <section>
+                        <h3>Мосты в другие языки</h3>
+
+                        <a href="https://pypi.org/project/ctyped/">ctyped</a>
+
+                        <pre><code class="hljs py" data-line-numbers="7-11" data-trim data-noescape>
+
+                            lib.myfunc.argtypes = [c_char_p, c_int]
+                            lib.myfunc.restype = c_char_p
+                            myfunc = lib.myfunc
+
+                            myfunc('some'.encode('utf-8'), 2019).decode('utf-8')
+
+                            @lib.function
+                            def myfunc(title: str, year: int) -> str:
+                                ...
+
+                            myfunc('some', 2019)
+
+
+                        </code></pre>
+
+                    </section>
+
+
+                    <section>
+                        <h3>Кодогенерация: PEP 557 Классы данных</h3>
+
+                        <pre><code class="hljs py" data-trim data-noescape>
+                            from __future__ import annotations
+                            from dataclasses import dataclass, field, asdict
+
+
+                            @dataclass(frozen=True)
+                            class MyClass:
+
+                                my_num: int = 42
+                                my_list: List[int] = field(default_factory=list)
+
+
+                            my_cls = MyClass(1, my_list=[1, 2, 3])
+                            asdict(my_cls)
+
+                        </code></pre>
+
+                    </section>
+
+
+                    <section>
+                        <h3>Схематизация</h3>
+
+                        <a href="https://pypi.org/project/marshmallow-annotations/">marshmallow-annotations</a>
+
+                        <pre><code class="hljs py" data-trim data-noescape>
+
+                            import attr
+                            from marshmallow_annotations import AnnotationSchema
+
+                            @attr.s
+                            class Album:
+                                id: int = attr.ib()
+                                name: str = attr.ib()
+
+                            class AlbumScheme(AnnotationSchema):
+
+                                class Meta:
+                                    target = Album
+                                    register_as_scheme = True
+
+                        </code></pre>
+
+
+                        <aside class="notes">
+                            <ul>
+                                <li>Схематизация: валидация + сериализация</li>
+                                <li>PEP 589 - TypedDict: подсказки типов для словарей со строгим набором ключей</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+
+                    <section>
+                        <h3>Схематизация. Новый уровень</h3>
+
+                        <a href="https://pypi.org/project/pydantic/">pydantic</a>
+
+                        <pre><code class="hljs py" data-trim data-noescape>
+
+                            from datetime import datetime
+                            from pydantic.dataclasses import dataclass
+
+                            @dataclass
+                            class User:
+
+                                id: int
+                                name: str = 'anonymous'
+                                signup_ts: datetime = None
+
+                            user = User(id='42', signup_ts='2032-06-21T12:00')
+                            user.json()
+                            user.dict()
+
+                        </code></pre>
+
+
+                        <small>
+                            * <a href="https://pydantic-docs.helpmanual.io/#benchmarks">быстрее чем</a>:
+                            marshmallow — 1.9x; django-restful-framework — 16.0x
+                        </small>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>Поддержка создания json-схем.</li>
+                                <li>Для хранения настроек. Переменные окружения.</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+
+
+                    <section>
+                        <h3>Инверсия управления, внедрение зависимости</h3>
+
+                        <div><small class="faded">любителям изощрений посвящается</small></div>
+
+                        <a href="https://pypi.org/project/auto-init/">auto-init</a>
+
+                        <pre><code class="hljs py" data-trim data-noescape>
+
+                            from auto_init import AutoInitContext
+
+                            class Point:
+                                x: int
+                                y: int
+                                z: int = None
+
+                            ctx = AutoInitContext()
+                            p: Point = ctx.get_instance(Point)
+                            assert p.x == 0
+                            assert p.y == 0
+                            assert p.z is None
+
+                        </code></pre>
+
+                    </section>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+
+                    <section data-background-color="rgb(255,204,0)">
+                        <h2>Аннотации это &hellip;</h2>
+                    </section>
+
+                    <section>
+
+                        <ul>
+                            <li>Проверка типов</li>
+                            <li>Усиление анализатора в IDE</li>
+                            <li>Обработка аргументов для CLI</li>
+                            <li>Мосты в другие языки</li>
+                            <li>Кодогенерация</li>
+                            <li>Схематизация</li>
+                            <li>IoC, DI</li>
+
+                            <li class="fragment fade-up">Перегрузка функций, функции общего вида</li>
+                            <li class="fragment fade-up">Упаковка (маршалинг) для RPC</li>
+                            <li class="fragment fade-up">Описание моделей в ORM</li>
+                            <li class="fragment fade-up"><span class="faded">&lt; ваш вариант &gt;</span></li>
+
+                        </ul>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>from functools import singledispatch</li>
+                                <li>Annotated[T, x]</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h3>Ссылки</h3>
+
+                    <ul>
+
+                        <li>PEP:
+                            <a href="https://pythonz.net/peps/named/3107/">3107</a>,
+                            <a href="https://pythonz.net/peps/named/0482/">482</a>,
+                            <a href="https://pythonz.net/peps/named/0483/">483</a>,
+                            <a href="https://pythonz.net/peps/named/0484/">484</a>,
+                            <a href="https://pythonz.net/peps/named/0526/">526</a>,
+                            <a href="https://pythonz.net/peps/named/0544/">544</a>,
+                            <a href="https://pythonz.net/peps/named/0557/">557</a>,
+                            <a href="https://pythonz.net/peps/named/0560/">560</a>,
+                            <a href="https://pythonz.net/peps/named/0563/">563</a>,
+                            <a href="https://pythonz.net/peps/named/0585/">585</a>,
+                            <a href="https://pythonz.net/peps/named/0589/">589</a>
+                            <small>pythonz.net</small>
+                        </li>
+                        <li><a href="https://github.com/python/typing/issues/600">Тип Annotated для typing</a>
+                            <small>англ., github.com</small>
+                        </li>
+                        <li>Видео: <a href="https://youtu.be/5nXmq1PsoJ0">
+                            The Fun of Reinvention</a>
+                            <small>англ., youtube.com</small>
+                        </li>
+                        <li>Видео: <a href="https://pythonz.net/videos/114/">
+                            Dataclasses: The code generator to end all<br> code generators</a>
+                            <small>англ., pythonz.net</small>
+                        </li>
+                        <li>Видео: <a href="https://pythonz.net/videos/120/">
+                            Проверка типов в Питоне как реальность</a>
+                            <small>pythonz.net</small>
+                        </li>
+
+                    </ul>
+                </section>
+
                 <!---------------------------------------------------------------------------------------------------------------->
 
                 <section>
