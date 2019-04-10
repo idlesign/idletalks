@@ -18,6 +18,11 @@ Reveal.initialize({
     mouseWheel: true,
     hideInactiveCursor: true,
 
+    keyboard: {
+        37: 'prev', // left arrow
+        39: 'next' // right arrow
+    },
+
     dependencies: [
         {
             src: '../static/revealjs/plugin/highlight/highlight.js',
