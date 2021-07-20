@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+		<title>Код, как наследие</title>
+
+		<meta name="description" content="Аннотации в языке Python">
+		<meta name="author" content="Игорь `idle sign` Стариков">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="../static/foundation-icons/foundation-icons.css" />
+		<link rel="stylesheet" href="../static/revealjs/css/reveal.css">
+		<link rel="stylesheet" href="../static/revealjs/css/theme/white.css" id="theme">
+        <link rel="stylesheet" href="../static/revealjs/lib/css/idea.css">
+
+        <link rel="stylesheet" href="../static/slides.css">
+		<script src="../static/slides-print.js"></script>
+	</head>
+
+	<body class="ya">
+		<div class="reveal">
+			<div class="slides">
+                <!--
+
+                    Это правда, что слово «legacy» подчас может пугать и наводить уныние.
+                    Однако не стоит забывать, что наследие наследию всё же рознь.
+                    Давайте определимся, что такое наследние, разберёмся каким оно бывает
+                    и поймём, как с ним можно жить.
+
+                    Ожидаемый уровень подготовки: начальный-средний.
+
+                -->
+                <section>
+                    <section>
+                        <h2>Код, как наследие</h2>
+                        <p class="faded"><small>
+                            Игорь Стариков
+                        </small></p>
+                    </section>
+                </section>
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <section data-background-color="rgb(255,204,0)">
+                        <h2>Что такое legacy</h2>
+                    </section>
+
+                    <section>
+                        <h3>Стереотипы</h3>
+
+                        <div class="faded">
+                            <ul class="ul-arrows">
+                                <li>Enterprise — кровавый</li>
+                                <li>Legacy — жуткое</li>
+                            </ul>
+                        </div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>кровавый (в основном из-за крови разработчиков)</li>
+                                <li>причина таких эпитетов: из-за подмены понятий</li>
+                                <li>название пришло из другого языка, не всегда и не всем понятно, что оно означается,
+                                    поэтому каждый использует свой опыт, вносит свои ассоциации.
+                                    энтерпрайз — это лишь приложения для предприятий (в противоположность отдельным пользователям)
+                                    для автоматизации бизнес-процессов.
+                                </li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h3>Legacy это?..</h3>
+
+                        <div class="faded">
+                            <ul class="ul-arrows">
+                                <li class="fragment fade-up">старый, запутанный, хрупкий код</li>
+                                <li class="fragment fade-up">покинутый всеми проект</li>
+                            </ul>
+                        </div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>люди зачастую характеризуют код таким образом</li>
+                                <li>почему акцент на характеристиках: древность, сложность, хрупкость</li>
+                                <li>
+                                    кто-то исчез (уволился, перешёл в другой проект, код написан «десантом»,
+                                    вот-вот должен быть запущен, его нужно будет развивать). про десант подробнее?
+                                </li>
+                                <li>но из опыта: всё может быть не так плохо</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h3>Definition</h3>
+
+                        <div class="faded">
+                            <ul class="ul-main">
+                                <li class="fragment fade-up">
+                                    <q>Something transmitted by or received from an ancestor<br>or predecessor or from the past</q>
+                                    <br><cite>Meriam-Webster</cite>
+                                </li>
+                                <li class="fragment fade-up">
+                                    <q>A result of event in the past</q>
+                                    <br><cite>Cambridge</cite>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h3>Наследие</h3>
+
+                        <div class="faded">
+                            <blockquote>То, что досталось нам из прошлого</blockquote>
+                        </div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>наследие бывает разное, в том числе хорошее.</li>
+                                <li>проекты разной степени запущенности</li>
+                                <li>код, как наследие — перешёл (был передан) от кого-то кому-то, привет из прошлого, необязательно далёкого</li>
+                                <li>это не только ярмо, но и возможность. «Конец — это чьё-то начало.» (сыновья уходят в бой)</li>
+                                <li>диалектика - для кого-то это родной код, а не наследство.</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <section data-background-color="#000">
+                        <h2>Наследие пугает</h2>
+
+                        <div>
+                            <ul class="ul-arrows">
+                                <li class="fragment fade-up">неизвестно, что ожидать</li>
+                                <li class="fragment fade-up">муторно, запутано, затянется</li>
+                                <li class="fragment fade-up">придётся мириться</li>
+                            </ul>
+                        </div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>причины, по которым пугаемся</li>
+                                <li>возникает вопрос: почему так</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h2>Что может быть не так</h2>
+
+                        <div class="faded">
+                            <ul class="ul-arrows">
+                                <li class="fragment fade-up"><div>недостаток информации на разных уровнях</div></li>
+                                <li class="fragment fade-up"><div>неподходящие инструменты — язык, библиотеки, и пр.</div></li>
+                                <li class="fragment fade-up"><div>сложности с кодом — от проектирования до оформления</div></li>
+                                <li class="fragment fade-up"><div>неудовлетворительная производительность</div></li>
+                            </ul>
+                        </div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li><b>мало информации</b> проект в целом, код (и комментарии), журнал, документации, мало трассировочной информации</li>
+                                <li>неоткуда почерпунть, бывает даже некого спросить</li>
+                                <li><b>инструменты</b> данные явно реляционного характера в докуменоориентированном хранилище</li>
+                                <li><b>проектирование</b> плохая согласованность подсистем (когда на проекте нет основного разработчика/ов, видящих картину в целом, а код дописывается разными людьми)</li>
+                                <li>несоответствие имён сущностей, классов, переменных функций начинке</li>
+                                <li>неожиданные партизанские заплатки (потому что динамический язык) — во время исполнения</li>
+                                <li><b>итог</b> это список, что не нужно делать, потому что...</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <img src="static/tofire.jpg">
+                    </section>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <section data-background-color="rgb(255,204,0)">
+                        <h2>Решения есть</h2>
+                    </section>
+
+                    <section>
+
+                        <div class="">
+                            <ul class="ul-main">
+                                <li class="fragment fade-up"><div>изменить своё отношение к наследию</div></li>
+                                <li class="fragment fade-up"><div>вести себя, как с любым незнакомым кодом</div></li>
+                            </ul>
+                        </div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>а что же нужно делать?</li>
+                                <li>сменить изначальный настрой</li>
+                                <li>makers vs menders - создатели, ремонтники. те и другие любят заниматься своим делом. @andreagoulet: 10% ремонтников</li>
+                                <li><b>незнакомый код</b> всё сказанное можно использовать и в случаях, когда вы вливаетесь в новый для вас проект</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <section data-background-color="rgb(255,204,0)">
+                        <h2>Стратегия</h2>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>что делать</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+
+                    <section>
+
+                        <div class="">
+                            <ul class="ul-main">
+                                <li class="fragment fade-up"><div>понять проект: какую задачу и как решает</div></li>
+                                <li class="fragment fade-up"><div>определить уровень проблемности и сложности</div></li>
+                                <li class="fragment fade-up">
+                                    <div>выбрать путь:
+                                        <div class="faded">
+                                            <span class="fragment fade-up">[почти] не трогать;</span>
+                                            <span class="fragment fade-up">всё переписать;</span>
+                                            <span class="fragment fade-up">развивать</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fragment fade-up"><div>обеспечивать «прозрачность» вашей работы</div></li>
+                                <li class="fragment fade-up"><div>рассчитать свои силы заблаговременно</div></li>
+                            </ul>
+                        </div>
+
+                        <aside class="notes">
+                            <small>
+                            <ul>
+                                <li>влиться в проект</li>
+                                <li><b>понять</b> правильно ли решается задача</li>
+                                <li>знакомство с сопроводительной документацией; <i>инфраструктурой</i></li>
+                                <li>не стесняться в получении информации от коллег</li>
+                                <li>обзор и анализ кода</li>
+                                <li><b>проблемность</b> часто ли правится, ломается, бывает что код просто работает</li>
+                                <li>много ли технического долга, рассмотреть fixme и todo.</li>
+                                <li>сложность зависит: от возраста проекта (старые библиотеки, подходы); широты использования стороннего кода (каркас)</li>
+                                <li><b>не трогать</b> — можно не костыли, а сразу хорошо</li>
+                                <li><b>переписать</b> переосмыслить. язык устарел. обить пороги потратить ресурсы (поддерживать оба проекта)</li>
+                                <li>добавление людей в команду обычно не ускоряет проецессы</li>
+                                <li><b>развивать</b> упростить, подготовить для дальнейшего расширения, сократить затраты</li>
+                                <li><b>прозрачность</b> рассказать заинтересованным что и как будет улучшаться или уже улучшилось, как это может быть полезно. возможно неожиданно откроются новые горизонты</li>
+                                <li>помнить: делаем продукт, поэтому везде компросисы, в т.ч. договориться с менеджером, сколько на новое, а сколько на поддержку</li>
+                            </ul></small>
+                        </aside>
+                    </section>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <section data-background-color="rgb(255,204,0)">
+                        <h2>Тактика</h2>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>как делать</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h2>Инструментарий</h2>
+
+                        <div class="">
+                            <ul class="ul-arrows">
+                                <li class="fragment fade-up"><div>система контроля версий</div></li>
+                                <li class="fragment fade-up"><div>среда разработки</div></li>
+                                <li class="fragment fade-up"><div>трекер задач</div></li>
+                                <li class="fragment fade-up"><div>средства мониторинга событий</div></li>
+                                <li class="fragment fade-up"><div>средства проверки качества кода</div></li>
+                                <li class="fragment fade-up"><div>непрерывная интеграция, средства автоматизации</div></li>
+                            </ul>
+                        </div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li><b>контроль</b> - cvs</li>
+                                <li><b>IDE</b> - поиск, навигация, анализ, реорганизация, отладка, БД, контроль версий </li>
+                                <li><b>трекер</b> - почему (как работает сейчас);
+                                    <br>зачем (как должно работать); должно быть ясно, какую задачу решаем, какой сценарий обрабатываем,
+                                    чтобы понимать правильно ли решаем, годится ли подход;
+                                    <br>что (вариант решения)</li>
+                                <li><b>мониторинг</b> — сервис (жаглер, соломон, графит); в том числе и продуктовых штук и производительности</li>
+                                <li><b>качество</b> - чувствовать подвижки: кодклимат, ковередж, майпай, pyperf</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h2>Работа с кодом. Подготовка</h2>
+
+                        <div class="">
+                            <ul class="ul-arrows">
+                                <li class="fragment fade-up"><div>покрывать тестами</div></li>
+                                <li class="fragment fade-up"><div>аннотировать типами</div></li>
+                                <li class="fragment fade-up"><div>добавлять строки документации, комментарии</div></li>
+                                <li class="fragment fade-up"><div>использовать запись в журнал</div></li>
+                                <li class="fragment fade-up"><div>дополнять события для мониторинга</div></li>
+                            </ul>
+                        </div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li><b>тесты</b> зафиксировать положение дел, включая баги. это тесты на регрессию.</li>
+                                <li>добавлять тесты по мере внесения изменений</li>
+                                <li>с помощью тестов и отладки можно понять работу кода, увидеть мёртвый код</li>
+                                <li>использовать имитаторы с умом (сократите количество сквозных интеграционных тестов)</li>
+                                <li>обеспечить воспроизводимость (обнулять БД от старых, битых данных)</li>
+                                <li><b>аннотации</b> помогают статическому анализатору, который помогает вам</li>
+                                <li><b>комментарии</b> нужны в неоднозначных местах</li>
+                                <li><b>журнал</b> (без фанатизма). можно отследить сценарии использования, мёртвую функциональность</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h2>Работа с кодом. Изменения</h2>
+
+                        <div class="">
+                            <ul class="ul-arrows">
+                                <li class="fragment fade-up"><div>изменять код мелкими порциями, постепенно</div></li>
+                            </ul>
+                        </div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>принцип Парето - небольшие улучшения дают 80% результата</li>
+                                <li>изолированные мелкие изменения для сокращения затрат на локализацию в будущем</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <img src="static/twolevels.jpg" width="50%">
+
+                        <aside class="notes">
+                            <ul>
+                                <li>не реорганизовывать параллельно с кем-то</li>
+                                <li>конфликты при слиянии; неожиданные ошибки во время исполнения</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h2>Работа с кодом. Изменения</h2>
+
+                        <div class="">
+                            <ul class="ul-arrows">
+                                <li><div>изменять код мелкими порциями, постепенно</div></li>
+                                <li class="fragment fade-up"><div>уменьшать сложность, помнить про «мёртвый» код</div></li>
+                                <li class="fragment fade-up"><div>устранять технический долг</div></li>
+                                <li class="fragment fade-up"><div>использовать новую функциональность языка</div></li>
+                                <li class="fragment fade-up"><div>избавляться от «копировать—вставить»</div></li>
+                            </ul>
+                        </div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li><b>сложность</b> KIS, распутать спагетти, реорганизация (в сложных случаях нужно уметь держать в голове полную картину)</li>
+                                <li>перенести часть работы на другой сервис; библиотеки</li>
+                                <li>мёртвая функциональность — повышает сложность, отъедает ресурсы</li>
+                                <li><b>техдолг</b> части в проекте плохо спроектированы, обособлены (недостаток или исключительно тесная связь абстракций)</li>
+                                <li>перевести на современные библиотеки, обновить инфраструктуру (каркас, бд, сервер приложений).
+                                    к обновлению кода юывает толкает обновление стороннего (бд -> драйвер -> код)
+                                </li>
+                                <li><b>язык</b> форматные строки, :=</li>
+                                <li><b>копировать</b> DRY. избавится от копировать-вставить, в том числе в тестах</li>
+                            </ul>
+                        </aside>
+                    </section>
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+
+                    <section data-background-color="rgb(255,204,0)">
+                        <h2>Диагностика</h2>
+                    </section>
+
+                    <section>
+                        <h2>Трассировка стека</h2>
+
+                        <pre><code class="hljs js" data-trim >
+                            Traceback (most recent call last):
+                             File "/here/src/toolbox/tasks.py", line 113, in func_action_wrapper
+                               result = func_action(**action_kwargs)
+                             File "/here/src/tasks.py", line 79, in startrek_sync_record
+                               Record.batch_startrek_sync()
+                             File "/here/src/models/aux_shared.py", line 157, in batch_startrek_sync
+                               synced = issue.sync()
+                             File "/here/src/toolbox/startrek.py", line 119, in sync
+                               issue = self._client.issue_get(
+                             File "/here/src/integration/startrek.py", line 76, in issue_get
+                               return self._request(f'/issues/{issue}')
+                             File "/here/src/integration/startrek.py", line 61, in _request
+                               raise HttpIntegrationError(response, message=str('\'.join(response.json()['errorMessages'])))
+                               mdh.core.exceptions.HttpIntegrationError: Internal error
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Запись журнала</h2>
+
+                        <div>
+                            <pre><code class="hljs py" data-trim data-noescape>
+                                2021-07-16 08:20:02,531 - PRC_491 ERROR  bcl.banks.common.statement_downloader:
+                                  IngNlStatementDownloader no statements found on 2021-07-16 00:00:00
+                            </code></pre>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Подход</h2>
+
+                        <div class="">
+                            <ol class="ul-main">
+                                <li><div>восстановить картину события, контекст:<br>
+                                    <span class="faded">КЧП — когда, что, почему</span>
+                                </div></li>
+                                <li><div>произвести поиск в коде</div></li>
+                                <li><div>воспроизвести событие</div></li>
+                                <li><div>определиться с дальнейшими действиями</div></li>
+                            </ol>
+                        </div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>собрать контекст из разных мест: когда, что, почему</li>
+                                <li>поиск по строке или навигация по коду</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <section data-background-color="rgb(255,204,0)">
+                        <h3>Потомкам — достойное наследие!</h3>
+                        <br>
+                        <img src="static/ruki.jpg" width="30%">
+
+                        <aside class="notes">
+                            <ul>
+                                <li>не стыдно быдует смотреть людям в глаза</li>
+                                <li>вы сами можете вернутсья к этому коду, время спустя</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h3>Материалы</h3>
+
+                    <ul class="ul-arrows">
+
+                        <li><div><i class="fi-play-video"></i> <a href="https://youtu.be/nVI2zfzKYqM">
+                            Putting the Right Developers on the Right Projects</a></div></li>
+
+                        <li><i class="fi-play-video"></i> <a href="https://youtu.be/RMt43wyg-zg">
+                            Working effectively with legacy code</a></li>
+
+                        <li><i class="fi-play-video"></i> <a href="https://pythonz.net/videos/120/">
+                            Проверка типов в Питоне, как реальность</a></li>
+
+                        <li><a href="https://pythonz.net/articles/30/">Азбука вежливости разработчика</a></li>
+                    </ul>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h3>Вопросы?</h3>
+                    <p><small>
+                        <a href="https://github.com/idlesign"><i class="fi-social-github"></i> idlesign</a> &nbsp;
+                        <a href="https://www.youtube.com/user/idlesign"><i class="fi-social-youtube"></i> idlesign</a> &nbsp;
+
+                        Эти слайды можно найти тут — <a href="https://idlesign.github.io/idletalks/012_legacy">bit.ly/ist_012</a>
+
+                        <br>
+                        <a href="https://idlesign.github.io/idletalks/012_legacy">
+                            <img src="static/qr-slides-legacy.png">
+                        </a>
+                    </small></p>
+
+                </section>
+
+			</div>
+		</div>
+
+		<script src="../static/revealjs/js/reveal.js"></script>
+		<script src="../static/slides-ya.js"></script>
+	</body>
+</html>

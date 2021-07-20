@@ -33,7 +33,61 @@ $ya-fnt-face: Arial, sans-serif;
     li>code {
         color: $ya-cl-orange;
     }
+
+    ul {
+        margin-left: 0;
+        left: 0;
+        max-width: 75%;
+    }
+
+    ul.ul-arrows {
+        list-style-type: none !important;
+
+        li:before {
+            content: "\203A";
+            padding-right: 0.3em;
+            white-space: nowrap;
+        }
+        li {
+            list-style: none;
+        }
+        div {
+            display: inline-block;
+            vertical-align: top;
+        }
+    }
+
+    ul.ul-main {
+        list-style-type: none;
+
+        li {
+            border-left: $ya-cl-yellow 5px solid;
+            padding-left: 0.4em;
+            margin-bottom: 0.5em;
+        }
+    }
+
+    cite {
+        text-align: right;
+        display: block;
+        font-size: 0.7em;
+    }
+
+    blockquote {
+        box-shadow: none !important;
+    }
+
+    sup {
+        font-size: 0.35em;
+        color: $cl-gray;
+    }
+
+    small pre {
+        width: 100% !important;
+    }
+
 }
+
 
 .faded {
     color: $cl-gray;
