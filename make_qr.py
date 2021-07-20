@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 """Creates qr.png in current directory, encoding text received from command line.
 
 Requires "qrcode" and Pillow packages installed:
