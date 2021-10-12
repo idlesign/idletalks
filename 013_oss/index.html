@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+		<title>Открытый код: азбука вежливости</title>
+
+		<meta name="description" content="Про открытый код и вежливый подход">
+		<meta name="author" content="Игорь `idle sign` Стариков">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="../static/foundation-icons/foundation-icons.css" />
+		<link rel="stylesheet" href="../static/revealjs/css/reveal.css">
+		<link rel="stylesheet" href="../static/revealjs/css/theme/white.css" id="theme">
+        <link rel="stylesheet" href="../static/revealjs/lib/css/idea.css">
+
+        <link rel="stylesheet" href="../static/slides.css">
+		<script src="../static/slides-print.js"></script>
+	</head>
+
+	<body class="ya">
+		<div class="reveal">
+			<div class="slides">
+                <!--
+
+                    Программирование. Может показаться странным, однако это одна из тех многочисленных областей
+                    человеческой деятельности, в которых немаловажную роль играет взаимодействие между людьми.
+                    Особенно ярко это демонстрируют популярные проекты с открытым исходным кодом.
+                    В них нередко сотрудничают совершенно различные люди, между которыми, казалось бы, ничего общего.
+                    Но ведь самый факт совместной добровольной работы над чем-то уже говорит нам, что общее
+                    всё же имеется. Давайте же рассмотрим некоторые факторы, которые помогут желающим участвовать
+                    в проекте понять, стоит ли в него вливаться. Здесь не будет рецептов типа «как сделать открытый
+                    проект и заработать на нём», зато будет про творчество, и про вежливость и про код,
+                    и про документирование, и про организационные моменты.
+
+                    Ожидаемый уровень подготовки: начальный-средний.
+
+                -->
+                <section>
+                    <section>
+                        <h2>Открытый код:<br>азбука вежливости</h2>
+                        <p class="faded"><small>
+                            Игорь Стариков
+                        </small></p>
+                    </section>
+                </section>
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <section data-background-color="rgb(255,204,0)">
+                        <h2>Введение</h2>
+                    </section>
+
+                    <section>
+                        Libre Office, ClickHouse, nginx, Firefox, Python,<br>Linux, Android, TensorFlow, Kubernetes, Django&hellip;
+                    </section>
+
+                    <section>
+                        <a href="https://opensourceindex.io/"><img src="static/rank.png"></a>
+                        <div><small><a href="https://opensourceindex.io/">opensourceindex.io</a></small></div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>в начале месяца мелькали новости о возможности создания Russian Open Source Foundation</li>
+                                <li>300 компаний</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section data-background-color="#000">
+                        <blockquote>
+                            «Капитал боится отсутствия прибыли или слишком маленькой прибыли, как природа боится пустоты».
+                            <cite>Томас Даннинг</cite>
+                        </blockquote>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>Но раз имеется в наличии достаточная прибыль, капитал становится смелым</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+
+                    <section>
+                        <img src="static/kapital.png">
+                    </section>
+
+                    <section>
+                        <h3>Прежде</h3>
+
+                        <div class="faded">
+                            <ul class="ul-arrows">
+                                <li>не видел способа заработать</li>
+                                <li>боялся потерять</li>
+                                <li>наблюдал движение Free Software</li>
+                            </ul>
+                        </div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>отнекивались, прикрываясь рассуждениями об убийстве интеллектуальной собственности</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h3>Потом</h3>
+
+                        <div class="faded">
+                            <ul class="ul-arrows">
+                                <li class="fragment fade-up">начал развиваться Linux</li>
+                                <li class="fragment fade-up">RedHat стала зарабатывать</li>
+                                <li class="fragment fade-up">вышло эссе <i>The Cathedral and the Bazaar</i></li>
+                                <li class="fragment fade-up">появился термин <i>Open Source</i></li>
+                                <li class="fragment fade-up"><div>компании сами стали <br>использовать, участвовать, создавать</div></li>
+                            </ul>
+                        </div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>ibm и linux, redhat</li>
+                                <li>Эрик Реймонд. влияние на netscape</li>
+                                <li>гонка за прибылью</li>
+                                <li>польза в конкурентной борьбе и репутации</li>
+                                <li>не можешь победить — возглавь</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section data-background-color="#000">
+                        <h3>Конкуренция</h3>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>безосы, маски и гейтсы</li>
+                                <li>хороша при мелкотоварном производстве</li>
+                                <li>можно ли тягаться?</li>
+                                <li>вложения и их размер: труд, деньги, раскрутка</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h3>Не грусти</h3>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>диалектическая закономерность</li>
+                                <li>нужно больше усилий, если важен результат</li>
+                            </ul>
+                        </aside>
+                    </section>
+                </section>
+                <!---------------------------------------------------------------------------------------------------------------->
+                <section>
+                    <section data-background-color="rgb(255,204,0)">
+                        <h3>Вежливый подход</h3>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>эмпатия</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h3>Допустим, приложением пользуются</h3>
+
+                        <div class="faded">
+                            <ul class="ul-arrows">
+                                <li class="fragment fade-up">есть ресурс с дистрибутивом&hellip;</li>
+                                <li class="fragment fade-up">&hellip;и описанием</li>
+                                <li class="fragment fade-up">есть инструкция по установке и настройке</li>
+                            </ul>
+                        </div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>npm, crates, pypi, packagist, github</li>
+                                <li>readme. сжато, доступно.</li>
+                                <li>ссылки с др. ресурсов: стек, я.ку</li>
+                                <li>язык документации</li>
+                                <li>сервисы для хранения док-ции</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h2>Вовлечение в разработку</h2>
+                    </section>
+
+                    <section>
+                        <h3>Доступность проекта</h3>
+
+                        <div class="faded">
+                            <ul class="ul-arrows">
+                                <li class="fragment fade-up">код в открытом доступе</li>
+                                <li class="fragment fade-up">снова документация. с примерами</li>
+                                <li class="fragment fade-up">файл <code>contributing</code></li>
+                                <li class="fragment fade-up"><div>
+                                    разметка задач в трекере <code>easy-pick</code>,<br><code>first-steps</code></div>
+                                </li>
+                                <li class="fragment fade-up">дружелюбие и открытость</li>
+                            </ul>
+                        </div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>простота и читаемость языка</li>
+                                <li>contrib - порядок работы, требования к коду</li>
+                                <li>ориентируйте по времени. аргументируйте отказы</li>
+                                <li>пользователи как источник идей +форки</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h3>Доступность кода</h3>
+
+                        <div class="faded">
+                            <ul class="ul-arrows">
+                                <li class="fragment fade-up">документация в коде</li>
+                                <li class="fragment fade-up">комментарии</li>
+                                <li class="fragment fade-up">разметка типов в дин. языках</li>
+                                <li class="fragment fade-up">стиль кода</li>
+
+                            </ul>
+                        </div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>автодоки для API</li>
+                                <li>todo, fixme - когда нет линии партии, куратора проекта</li>
+                                <li>python typing, typescript</li>
+                                <li>стиль и читаемость: автоформат black, чистильщики</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h3>Принципы формирования кода</h3>
+
+                        <div class="faded">
+                            <ul class="ul-arrows">
+                                <li class="fragment fade-up">наименьшей неожиданности</li>
+                                <li class="fragment fade-up">разумных умолчаний</li>
+                            </ul>
+                        </div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>логичность: разделение на сущности и абстракции. структурирование</li>
+                                <li>анализ и прогнозирование вар-тов использования кода</li>
+                                <li>упрощения — сахарные слои — обёртки на сущностями для базовых сценариев</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h3>Тесты</h3>
+
+                        <div class="faded">
+                            <ul class="ul-arrows">
+                                <li class="fragment fade-up">должны быть</li>
+                                <li class="fragment fade-up">придают уверенность</li>
+                                <li class="fragment fade-up">должны пополняться</li>
+                                <li class="fragment fade-up">рекомендована автоматизация</li>
+                            </ul>
+                        </div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>чтобы код гнулся, но не ломался</li>
+                                <li>непрерывная интеграция и автотесты — github actions</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h3>Тоже важно</h3>
+
+                        <div class="faded">
+                            <ul class="ul-arrows">
+                                <li class="fragment fade-up">нумерация версий: <code>1.2.3</code></li>
+                                <li class="fragment fade-up">история изменений — <code>CHANGELOG</code></li>
+                                <li class="fragment fade-up">частота выпусков</li>
+                                <li class="fragment fade-up">лицензия</li>
+                                <li class="fragment fade-up">упоминание создателей — <code>AUTHORS</code></li>
+
+                            </ul>
+                        </div>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>осмысленная нумерация — три сегмента</li>
+                                <li>бережливый подход lean и частые выпуски</li>
+                                <li>могут ли компании использовать ваш код</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+                <section>
+                    <section data-background-color="rgb(255,204,0)">
+                        <h3>Подытожим</h3>
+                    </section>
+
+
+                    <section>
+                        <h3>КОД</h3>
+
+                        <div class="faded">
+                            <ul class="ul-arrows">
+                                <li class="fragment fade-up"><strong>К</strong>од — следить, холить, тестировать</li>
+                                <li class="fragment fade-up"><strong>О</strong>ткрытость — также и в общении</li>
+                                <li class="fragment fade-up"><strong>Д</strong>окументация — для пользователей и соратников</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h3>Дополнительные материалы</h3>
+
+                        <ul class="ul-arrows">
+
+                            <li><div><i class="fi-play-video"></i> <a href="https://youtu.be/SdI-vHQ6z8w">
+                                Код, как наследие</a></div></li>
+                            <li><div><i class="fi-play-video"></i> <a href="https://youtu.be/ZE7WsnmGZ3U">
+                                Ваш вклад в сообщество Python</a></div></li>
+                        </ul>
+
+                    </section>
+
+                    <section>
+                        <h2>Открытый код: азбука вежливости</h2>
+
+                        <aside class="notes">
+                            <ul>
+                                <li>совместное творчество</li>
+                                <li>мир лучше, принести пользу, узнать новое, познакомиться</li>
+                                <li>общество в миниатюре - соц., экон., полит. проц. диплом?</li>
+                            </ul>
+                        </aside>
+
+                    </section>
+
+                </section>
+
+                <!---------------------------------------------------------------------------------------------------------------->
+
+                <section>
+                    <h3>Вопросы и обсуждение</h3>
+                    <p><small>
+                        <a href="https://github.com/idlesign"><i class="fi-social-github"></i> idlesign</a> &nbsp;
+                        <a href="https://www.youtube.com/user/idlesign"><i class="fi-social-youtube"></i> idlesign</a> &nbsp;
+                        <br>
+                        Эти слайды можно найти тут — <a href="https://idlesign.github.io/idletalks/013_oss">bit.ly/ist_013</a>
+
+                        <br>
+                        <a href="https://idlesign.github.io/idletalks/013_oss">
+                            <img src="static/qr-slides-oss.png">
+                        </a>
+                    </small></p>
+
+                </section>
+
+			</div>
+		</div>
+
+        <script src="../static/revealjs/plugin/highlight/highlight.js"></script>
+        <script src="../static/revealjs/plugin/notes/notes.js"></script>
+		<script src="../static/revealjs/js/reveal.js"></script>
+		<script src="../static/slides-ya.js"></script>
+	</body>
+</html>
