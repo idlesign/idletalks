@@ -70,3 +70,7 @@ pre.smaller {
 
 li.marg__b {
   margin-bottom: 1em; }
+
+table img {
+  width: 100%;
+  height: auto; }

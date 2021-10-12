@@ -23,14 +23,5 @@ Reveal.initialize({
         39: 'next' // right arrow
     },
 
-    dependencies: [
-        {
-            src: '../static/revealjs/plugin/highlight/highlight.js',
-            async: true,
-            callback: function () {
-                hljs.initHighlightingOnLoad();
-            }
-        },
-        {src: '../static/revealjs/plugin/notes/notes.js', async: true}
-    ]
+    plugins: [ RevealHighlight, RevealNotes ]
 });

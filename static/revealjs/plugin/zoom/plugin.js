@@ -1,33 +1,35 @@
-// Custom reveal.js integration
-var RevealZoom = (function(){
+/*!
+ * reveal.js Zoom plugin
+ */
+const Plugin = {
 
-	return {
-		init: function() {
+	id: 'zoom',
 
-			Reveal.getRevealElement().addEventListener( 'mousedown', function( event ) {
-				var defaultModifier = /Linux/.test( window.navigator.platform ) ? 'ctrl' : 'alt';
+	init: function( reveal ) {
 
-				var modifier = ( Reveal.getConfig().zoomKey ? Reveal.getConfig().zoomKey : defaultModifier ) + 'Key';
-				var zoomLevel = ( Reveal.getConfig().zoomLevel ? Reveal.getConfig().zoomLevel : 2 );
+		reveal.getRevealElement().addEventListener( 'mousedown', function( event ) {
+			var defaultModifier = /Linux/.test( window.navigator.platform ) ? 'ctrl' : 'alt';
 
-				if( event[ modifier ] && !Reveal.isOverview() ) {
-					event.preventDefault();
+			var modifier = ( reveal.getConfig().zoomKey ? reveal.getConfig().zoomKey : defaultModifier ) + 'Key';
+			var zoomLevel = ( reveal.getConfig().zoomLevel ? reveal.getConfig().zoomLevel : 2 );
 
-					zoom.to({
-						x: event.clientX,
-						y: event.clientY,
-						scale: zoomLevel,
-						pan: false
-					});
-				}
-			} );
+			if( event[ modifier ] && !reveal.isOverview() ) {
+				event.preventDefault();
 
-		}
+				zoom.to({
+					x: event.clientX,
+					y: event.clientY,
+					scale: zoomLevel,
+					pan: false
+				});
+			}
+		} );
+
 	}
 
-})();
+};
 
-Reveal.registerPlugin( 'zoom', RevealZoom );
+export default () => Plugin;
 
 /*!
  * zoom.js 0.3 (modified for use with reveal.js)
