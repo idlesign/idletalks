@@ -19,6 +19,10 @@ $ya-fnt-face: Arial, sans-serif;
     text-transform: none;
 }
 
+.bg-white {
+    background-color: $cl-white !important;
+}
+
 .ya {
     @include ya-font;
 
@@ -31,6 +35,9 @@ $ya-fnt-face: Arial, sans-serif;
     }
 
     li>code {
+        color: $ya-cl-orange;
+    }
+    li>div>code {
         color: $ya-cl-orange;
     }
 

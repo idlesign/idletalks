@@ -1,3 +1,6 @@
+.bg-white {
+  background-color: white !important; }
+
 .ya {
   font-family: Arial, sans-serif;
   text-transform: none; }
@@ -7,6 +10,8 @@
     font-family: Arial, sans-serif;
     text-transform: none; }
   .ya li > code {
+    color: #ff9a00; }
+  .ya li > div > code {
     color: #ff9a00; }
   .ya ul {
     margin-left: 0;
